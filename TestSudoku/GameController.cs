@@ -21,9 +21,10 @@ namespace Sudoku
         {
             view.Start();
             //game.ToCSV();
-            view.Show(game.FromCSV("Export", false));
+            view.Show(game.FromCSV("Invalid3X3", false));
             game.StartTimer();
             view.Show(game.ToPrettyString());
+            view.Show(game.SquareValid(4));
             game.ToCSV();
             view.Stop();
         }

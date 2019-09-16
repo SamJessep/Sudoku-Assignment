@@ -1,6 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sudoku;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace FeatureTests
 {
@@ -37,34 +45,17 @@ namespace FeatureTests
         {
             //Arrange 
             Game theGame = new Game();
-            string json = "{BaseScore:100,Highscore:2,HintsUsed:2,SquareHeight:2,SquareWidth:3,TargetTime:200,TimeSpent:500000}";
-            GameSettings jsonObj = theGame.ReadJsonSettings(json);
-            //Act 
-            Type actualType = jsonObj.GetType();
-            Type expectedType = typeof(GameSettings);
+            //"{BaseScore:100,Highscore:2,HintsUsed:2,SquareHeight:2,SquareWidth:3,TargetTime:200,TimeSpent:500000}"
+            string csvText = System.IO.File.ReadAllText(@"..\..\..\Export\valid3X3.csv");
+            Dictionary<string, string> csvParts = theGame.SplitInput(csvText);
+            GameSettings jsonObj = theGame.ReadJsonSettings(csvParts["Settings"]);
+            
+            //Act
 
             int expectedHighScore = 2;
             int actualHighScore = jsonObj.Highscore;
             //Assert
-            Assert.AreEqual(expectedType, actualType, "returned json is correct type");
-            Assert.AreEqual(expectedHighScore, actualHighScore, "Gets the correct highscore");
-        }
-        /*[TestMethod]
-        public void WriteJsonSettings()
-        {
-            //Arrange 
-            Game theGame = new Game();
-            theGame.FromCSV("valid3X3",false);
-            GameSettings jsonObj = new GameSettings();
-            theGame.squareWidth = 999;
-            theGame.WriteJsonSettings(jsonObj);
-            //Act 
-            int actualValue = theGame.numbersArray[5];
-            int expectedValue = 4;
-            //Assert
-            Assert.AreEqual(expectedValue, actualValue, "Correctly loads csv");
-        }*/
-
-       
+            Assert.AreEqual(actualHighScore, expectedHighScore, "Gets the correct highscore");
+        }       
     }
 }

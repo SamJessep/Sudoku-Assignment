@@ -144,10 +144,10 @@ namespace Sudoku
             return validValues;
         }
 
-        private bool RowValid(int rowNumber)
+        public bool RowValid(int rowNumber)
         {
             int[] newArray = new int[gridLength];
-            for (int i = 1; i < gridWidth; i++)
+            for (int i = 0; i < gridWidth; i++)
             {
                 int number = numbersArray[GetByRow(rowNumber, i)];
                 if (number == 0 || newArray.Contains(number))
@@ -159,10 +159,10 @@ namespace Sudoku
             }
             return true;
         }
-        private bool ColumnValid(int columnNumber)
+        public bool ColumnValid(int columnNumber)
         {
             int[] newArray = new int[gridLength];
-            for (int i = 1; i < gridHeight; i++)
+            for (int i = 0; i < gridHeight; i++)
             {
                 int number = numbersArray[GetByColumn(columnNumber, i)];
                 if (number == 0 || newArray.Contains(number))
@@ -175,7 +175,7 @@ namespace Sudoku
             return true;
         }
 
-        private bool SquareValid(int squareNumber)
+        public bool SquareValid(int squareNumber)
         {
             int Boxes = squareWidth * squareHeight;
             int[] newArray = new int[Boxes];
@@ -192,7 +192,7 @@ namespace Sudoku
             return true;
         }
 
-        private bool CellValid(int index)
+        public bool CellValid(int index)
         {
             if (SquareValid(GetSquareFromIndex(index)) && (RowValid(GetRowByIndex(index))) && (ColumnValid(GetColumnByIndex(index))))
             {
