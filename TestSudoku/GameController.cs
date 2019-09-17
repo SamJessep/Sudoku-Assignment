@@ -22,10 +22,11 @@ namespace Sudoku
             view.Start();
             //game.ToCSV();
             view.Show(game.FromCSV("Invalid3X3", false));
-            game.StartTimer();
             view.Show(game.ToPrettyString());
             view.Show(game.SquareValid(4));
             game.ToCSV();
+            game.SetHighScore();
+            view.Show(game.highScore);
             view.Stop();
         }
     }

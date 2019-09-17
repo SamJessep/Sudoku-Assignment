@@ -49,13 +49,65 @@ namespace FeatureTests
             string csvText = System.IO.File.ReadAllText(@"..\..\..\Export\valid3X3.csv");
             Dictionary<string, string> csvParts = theGame.SplitInput(csvText);
             GameSettings jsonObj = theGame.ReadJsonSettings(csvParts["Settings"]);
-            
+
             //Act
 
             int expectedHighScore = 2;
             int actualHighScore = jsonObj.Highscore;
             //Assert
             Assert.AreEqual(actualHighScore, expectedHighScore, "Gets the correct highscore");
-        }       
+        }
+
+        [TestMethod]
+        public void GetCell()
+        {
+            //Arrange 
+            Game theGame = new Game();
+            theGame.FromCSV("valid3X3", false);
+            theGame.numbersArray[0] = 100;
+
+            //Act 
+            int actualValue = theGame.GetCell(0);
+            int expectedValue = 100;
+            //Assert
+            Assert.AreEqual(expectedValue, actualValue, "Gets the correct value of cell 0");
+        }
+        [TestMethod]
+        public void SetCell()
+        {
+            //Arrange 
+            Game theGame = new Game();
+            theGame.FromCSV("valid3X3", false);
+            theGame.SetCell(100, 0);
+            //Act 
+            int actualValue = theGame.numbersArray[0];
+            int expectedValue = 100;
+            //Assert
+            Assert.AreEqual(expectedValue, actualValue, "Correctly sets cell 0 to 100");
+        }
+        [TestMethod]
+        public void MakeSquare()
+        {
+            //Arrange 
+            Game theGame = new Game();
+            theGame.FromCSV("valid3X3", false);
+            //Act 
+            int actualValue = theGame.MakeSquare(1).Length;
+            int expectedValue = 4;
+            //Assert
+            Assert.AreEqual(expectedValue, actualValue, "Correctly creates a string with the correct spacing");
+        }
+        [TestMethod]
+        public void MakeLine()
+        {
+            //Arrange 
+            Game theGame = new Game();
+            theGame.FromCSV("valid3X3", false);
+            //Act 
+            int actualValue = theGame.MakeLine(theGame.squareWidth).Length;
+            int expectedValue = 40;
+            //Assert
+            Assert.AreEqual(expectedValue, actualValue, "Correctly creates a string with the correct amount of - characters");
+        }
     }
 }

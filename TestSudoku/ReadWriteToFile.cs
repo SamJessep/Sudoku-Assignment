@@ -19,7 +19,7 @@ namespace Sudoku
             string EditedSudoku = csvParts.ContainsKey("EditedSudoku") ? csvParts["EditedSudoku"]: null;
             string Settings = csvParts["Settings"];
             GameSettings csvSettings = ReadJsonSettings(Settings);
-            SetSettings(csvSettings);
+            SetSettings(csvSettings, loadSave);
             LoadNumbersArray(OriginalSudoku, loadSave?EditedSudoku:OriginalSudoku);
             return "loaded: " + csv + ".csv "+ (loadSave?"saved ":"orginal ") + "Sudoku";
         }
@@ -55,14 +55,14 @@ namespace Sudoku
             return sr.ReadToEnd();
         }
 
-        public void SetSettings(GameSettings s)
+        public void SetSettings(GameSettings s, bool loadSave)
         {
             SetSquareWidth(s.SquareWidth);
             SetSquareHeight(s.SquareHeight);
             highScore = s.Highscore;
             targetTime = s.TargetTime;
-            hintsUsed = s.HintsUsed;
-            timeTaken = s.TimeSpent;
+            hintsUsed = loadSave ? s.HintsUsed : 0;
+            timeTaken = loadSave ? s.TimeSpent : 0;
             baseScore = s.BaseScore;
             gridHeight = gridWidth = squareWidth * squareHeight;
             gridLength = gridHeight * gridWidth;
