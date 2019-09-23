@@ -6,28 +6,29 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    class GameController
+    public class GameController
     {
         protected IView view;
-        protected Game game;
+        public Game game;
+        protected SudokuForm form;
 
-        public GameController(IView theView, Game theGame)
+        public GameController(IView theView, Game theGame, SudokuForm theForm)
         {
             view = theView;
             game = theGame;
+            form = theForm;
         }
 
         public void Go()
         {
-            view.Start();
+            form.SetController(this);
             //game.ToCSV();
-            view.Show(game.FromCSV("Invalid3X3", false));
-            view.Show(game.ToPrettyString());
-            view.Show(game.SquareValid(4));
-            game.ToCSV();
-            game.SetHighScore();
-            view.Show(game.highScore);
-            view.Stop();
+            game.FromCSV("2X3", false);
+            form.MakeSudoku(game);
+            //view.Start();
+            //view.DrawSudoku(game);
+            //view.OpenForm();
+            //view.Stop();
         }
     }
 }
