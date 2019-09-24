@@ -11,9 +11,11 @@ namespace Sudoku
 {
     public partial class Game : ISerialize
     {
+        private string currentGameFile;
         public string FromCSV(string csv, bool loadSave)
         {
-            string csvText = System.IO.File.ReadAllText(@"..\..\..\Export\" + csv + ".csv");
+            currentGameFile = csv;
+            string csvText = File.ReadAllText(@csv);
             Dictionary<string, string> csvParts = SplitInput(csvText);
             string OriginalSudoku = csvParts["OriginalSudoku"];
             string EditedSudoku = csvParts.ContainsKey("EditedSudoku") ? csvParts["EditedSudoku"]: null;
@@ -109,7 +111,7 @@ namespace Sudoku
             string original = ToCSVString(originalNumbersArray);
             string currentSave = ToCSVString(numbersArray);
             string csvString = gameSettings + "\n*" + original + "\n*" + currentSave;
-            File.WriteAllText(@"..\..\..\Export\Export.csv", csvString);
+            File.WriteAllText(@"..\..\..\Export\"+currentGameFile+".csv", csvString);
             return csvString;
         }
 

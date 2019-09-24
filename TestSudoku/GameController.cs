@@ -23,7 +23,7 @@ namespace Sudoku
         {
             form.SetController(this);
             //game.ToCSV();
-            game.FromCSV("2X3", false);
+            game.FromCSV("C:\\Users\\Sam\\source\\repos\\SamJessep\\Sudoku-Assignment\\Export\\2x2.csv", false);
             form.MakeSudoku(game);
             //view.Start();
             //view.DrawSudoku(game);

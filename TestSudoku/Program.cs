@@ -9,6 +9,7 @@ namespace Sudoku
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             //new GameController(new ConsoleView(), new Game()).Go();
