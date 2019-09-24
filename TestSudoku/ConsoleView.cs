@@ -24,6 +24,14 @@ namespace Sudoku
             Console.WriteLine(prompt);
         }
 
+        public void DrawSudoku(Game game)
+        {
+            Console.WriteLine(game.ToPrettyString());
+        }
 
+        public void OpenForm()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    interface IView
+    public interface IView
     {
         void Start();
         void Stop();
         void Show<T>(T Prompt);
+
+        void DrawSudoku(Game game);
+        void OpenForm();
     }
 }
