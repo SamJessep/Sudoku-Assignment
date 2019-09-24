@@ -29,28 +29,31 @@ namespace FeatureTests
         public void SettingHighScore()
         {
             Game theGame = new Game();
-            theGame.FromCSV("valid3X3", false);
-            theGame.highScore = 100;
+            theGame.FromCSV("valid3x3Incomplete", false);
+            theGame.timeTaken = 50;
+            theGame.targetTime = 100;
             theGame.SetHighScore();
 
-            int expectedVal = 100;
+            int expectedVal = 16200;
             int actualVal = theGame.highScore;
 
-            Assert.AreEqual(expectedVal, actualVal, "old score should stay as the high score");
+            Assert.AreEqual(expectedVal, actualVal, "old score should Be replaced");
         }
 
         [TestMethod]
         public void SettingHighScore2()
         {
             Game theGame = new Game();
-            theGame.FromCSV("valid3X3", false);
-            theGame.highScore = 1;
+            theGame.FromCSV("valid3x3Incomplete", false);
+            theGame.highScore = 10000;
+            theGame.timeTaken = 1000;
+            theGame.targetTime = 100;
             theGame.SetHighScore();
 
-            int expectedVal = 2;
+            int expectedVal = 10000;
             int actualVal = theGame.highScore;
 
-            Assert.AreEqual(expectedVal, actualVal, "highscore score should be replaced");
+            Assert.AreEqual(expectedVal, actualVal, "old highscore should stay");
         }
     }
 }

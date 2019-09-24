@@ -13,9 +13,14 @@ namespace Sudoku
 
         public int[] GetHint()
         {
+            if(CountZeros(numbersArray) == 0)
+            {
+                int[] a = new int[0];
+                return a;
+            }
             int x = rnd.Next(numbersArray.Length);
             bool found = false;
-            while (found)
+            while (!found)
             {
                 if (numbersArray[x] == 0)
                 {

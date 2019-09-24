@@ -18,21 +18,25 @@ namespace Sudoku
 
 
         public int GetScore()
-        {   
-            int TimeScore = baseScore - (timeTaken-targetTime);
-            int gridScore = 0;
-            for (var i = 0; i < originalNumbersArray.Length; i++)
-            {
-                if (originalNumbersArray[i] == 0)
-                {
-                    gridScore++;
-                }
-            }
-            gridScore = gridScore / originalNumbersArray.Length;
-            return (TimeScore * gridScore) - (hintsUsed * 10);
+        {   //time left* BaseScore
+            float TimeScore = baseScore * (targetTime/timeTaken);
+            int zeros = CountZeros(originalNumbersArray);
+            float gridScore = originalNumbersArray.Length / zeros;
+            return (int)(TimeScore * gridScore) - (hintsUsed * 30);
         }
 
-        
+        public int CountZeros(int[] a)
+        {
+            int zeroCount = 0;
+            for(int i = 0; i<a.Length; i++)
+            {
+                if(a[i] == 0)
+                {
+                    zeroCount++;
+                }
+            }
+            return zeroCount;
+        }
 
         public void StartTimer()
         {
@@ -54,14 +58,14 @@ namespace Sudoku
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             timeTaken++;
-            Console.WriteLine(timeTaken);
         }
 
         public void SetHighScore()
         {
-            if (GetScore() > highScore)
+            int myScore = GetScore();
+            if (myScore > highScore)
             {
-                highScore = GetScore();
+                highScore = myScore;
                 
             }
         }
