@@ -50,11 +50,11 @@ namespace Sudoku
                 bool isZero = numbersArray[i] == 0;
                 if (isZero)
                 { 
-                    AddButton("", numbersArray[i].ToString(), row, col);
+                    AddButton("", numbersArray[i].ToString(), row, col, 25);
                 }
                 else
                 {
-                    AddLabel("", numbersArray[i].ToString(), row, col);
+                    AddLabel("", numbersArray[i].ToString(), row, col, 25);
                 }
             }
         }
@@ -63,30 +63,30 @@ namespace Sudoku
         {
             for(int i = 0; i<=n; i++)
             {
-                AddButton("inputBtn_", i==0?"":i.ToString(), n+1, i);
+                AddButton("inputBtn_", i==0?"":i.ToString(), n+1, i, 0);
             }
         }
 
-        protected void AddButton(string name, string text, int row, int column)
+        protected void AddButton(string name, string text, int row, int column,int xOffset)
         {
             
-            int x = 10 + 50 * column;
+            int x = 10 + xOffset + 50 * column;
             int y = menuStrip1.Height+10 + 50 * row ;
             Button cell = new Button();
             cell.Name = name+row+"_"+column;
             cell.Height = 50;
             cell.Width = 50;
             cell.Font = new Font("Arial", 20);
-            cell.Text = text;
+            cell.Text = (text == 0.ToString())?"":text;
             cell.Visible = true;
             cell.Location = new Point(x,y);
             cell.Click += GridButton_clicked;
             Controls.Add(cell);
         }
 
-        protected void AddLabel(string name, string text, int row, int column)
+        protected void AddLabel(string name, string text, int row, int column, int xOffset)
         {
-            int x = 10 + 50 * column;
+            int x = 10 + xOffset + 50 * column;
             int y = menuStrip1.Height + 10 + 50 * row;
             Label cell = new Label();
             cell.Name = name + row + "_" + column;
@@ -128,17 +128,20 @@ namespace Sudoku
 
         private void gameSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoadGame(false);
+            LoadGame(true);
         }
 
         private void newGameToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            LoadGame(true);
+            LoadGame(false);
         }
 
         private void LoadGame(bool isLoadingSave)
         {
-            RemoveGrid(controller.game.numbersArray.Length + controller.game.gridWidth + 1);
+            if (controller.game.numbersArray.Length > 0)
+            {
+                RemoveGrid(controller.game.numbersArray.Length + controller.game.gridWidth + 1);
+            }
             controller.game.FromCSV(GetFilePath(), isLoadingSave);
             MakeSudoku(controller.game);
         }
@@ -176,6 +179,11 @@ namespace Sudoku
         private void button1_Click(object sender, EventArgs e)
         {
             Controls.RemoveAt(Controls.Count-1);
+        }
+
+        private void loadSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

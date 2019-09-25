@@ -15,7 +15,7 @@ namespace Sudoku
         public int gridLength;
         public int max;
         public int numberOfSquares;
-        public int[] numbersArray;
+        public int[] numbersArray = { };
         public int[] originalNumbersArray;
         public int[] lastSaveNumbersArray;
 

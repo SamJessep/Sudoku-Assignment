@@ -14,11 +14,12 @@ namespace Sudoku
         private string currentGameFile;
         public string FromCSV(string csv, bool loadSave)
         {
+            csv = GetRelativePath(csv, AppDomain.CurrentDomain.BaseDirectory);
             currentGameFile = csv;
             string csvText = File.ReadAllText(@csv);
             Dictionary<string, string> csvParts = SplitInput(csvText);
             string OriginalSudoku = csvParts["OriginalSudoku"];
-            string EditedSudoku = csvParts.ContainsKey("EditedSudoku") ? csvParts["EditedSudoku"]: null;
+            string EditedSudoku = csvParts.ContainsKey("EditedSudoku") ? csvParts["EditedSudoku"]: csvParts["OriginalSudoku"];
             string Settings = csvParts["Settings"];
             GameSettings csvSettings = ReadJsonSettings(Settings);
             SetSettings(csvSettings, loadSave);
@@ -111,7 +112,7 @@ namespace Sudoku
             string original = ToCSVString(originalNumbersArray);
             string currentSave = ToCSVString(numbersArray);
             string csvString = gameSettings + "\n*" + original + "\n*" + currentSave;
-            File.WriteAllText(@"..\..\..\Export\"+currentGameFile+".csv", csvString);
+            File.WriteAllText(currentGameFile, csvString);
             return csvString;
         }
 
@@ -126,6 +127,15 @@ namespace Sudoku
                 result += isLastNumber ? number : endOfLine ? "\n" + number: "," + number;
             }
             return result;
+        }
+
+        public string GetRelativePath(string path1, string path2)
+        {
+            Uri uri1 = new Uri(path1);
+            Uri uri2 = new Uri(path2);
+
+            Uri relativeUri = uri2.MakeRelativeUri(uri1);
+            return relativeUri.ToString();
         }
 
         public int GetCell(int gridIndex) => numbersArray[gridIndex];
