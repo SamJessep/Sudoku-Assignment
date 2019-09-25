@@ -47,14 +47,14 @@ namespace Sudoku
             {
                 int row = game.GetRowByIndex(i);
                 int col = game.GetColumnByIndex(i);
-                bool isZero = numbersArray[i] == 0;
+                bool isZero = game.originalNumbersArray[i] == 0;
                 if (isZero)
                 { 
-                    AddButton("", numbersArray[i].ToString(), row, col, 25);
+                    AddButton("","Sudoku", numbersArray[i].ToString(), row, col, 25);
                 }
                 else
                 {
-                    AddLabel("", numbersArray[i].ToString(), row, col, 25);
+                    AddLabel("", "Sudoku", numbersArray[i].ToString(), row, col, 25);
                 }
             }
         }
@@ -63,11 +63,11 @@ namespace Sudoku
         {
             for(int i = 0; i<=n; i++)
             {
-                AddButton("inputBtn_", i==0?"":i.ToString(), n+1, i, 0);
+                AddButton("inputBtn_","Control", i==0?"":i.ToString(), n+1, i, 0);
             }
         }
 
-        protected void AddButton(string name, string text, int row, int column,int xOffset)
+        protected void AddButton(string name, string Tag, string text, int row, int column, int xOffset)
         {
             
             int x = 10 + xOffset + 50 * column;
@@ -78,13 +78,14 @@ namespace Sudoku
             cell.Width = 50;
             cell.Font = new Font("Arial", 20);
             cell.Text = (text == 0.ToString())?"":text;
+            cell.Tag = Tag;
             cell.Visible = true;
             cell.Location = new Point(x,y);
             cell.Click += GridButton_clicked;
             Controls.Add(cell);
         }
 
-        protected void AddLabel(string name, string text, int row, int column, int xOffset)
+        protected void AddLabel(string name, string Tag, string text, int row, int column, int xOffset)
         {
             int x = 10 + xOffset + 50 * column;
             int y = menuStrip1.Height + 10 + 50 * row;
@@ -94,6 +95,7 @@ namespace Sudoku
             cell.Width = 50;
             cell.Font = new Font("Arial", 20);
             cell.Text = text;
+            cell.Tag = Tag;
             cell.BorderStyle = BorderStyle.FixedSingle;
             cell.AutoSize = false;
             cell.TextAlign = ContentAlignment.MiddleCenter;
@@ -148,11 +150,13 @@ namespace Sudoku
 
         private void RemoveGrid(int count)
         {
-            for (int i = count; i > 0; i--)
+            foreach (Control control in Controls)
             {
-                Controls.RemoveAt(Controls.Count - 1);
+                if (control.Tag != null && (control.Tag.ToString() == "Sudoku" || control.Tag.ToString() == "Control"))
+                {
+                    Controls.Remove(control);
+                }
             }
-            
         }
 
         private string GetFilePath()
