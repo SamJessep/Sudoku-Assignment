@@ -16,6 +16,7 @@ namespace Sudoku
     {
         GameController controller;
         private int SelectedVal;
+        private List<Graphics> outlines = new List<Graphics>();
         public void SetController(GameController theController)
         {
             controller = theController;
@@ -27,11 +28,11 @@ namespace Sudoku
 
         public void MakeSudoku(Game game)
         {
+            int H = menuStrip1.Height + 80 + (50 * (game.gridHeight + 2));
+            int W = 40 + (50 * (game.gridWidth + 1));
+            setWindowSize(W, H);
             drawGrid(game);
             DrawControlls(game.numberOfSquares);
-            int H = menuStrip1.Height + 80 + (50 * (game.gridHeight + 2));  
-            int W = 40 + (50 * (game.gridWidth+1));
-            setWindowSize(W, H);
         }
 
         private void setWindowSize(int w,int h)
@@ -40,6 +41,44 @@ namespace Sudoku
             Height = h;
         }
 
+        public void DrawSquare(int x, int y, int w, int h, int t)
+        {
+            Pen blackPen = new Pen(Color.FromArgb(255, 0, 0, 0), t);
+            Graphics g = CreateGraphics();
+            Rectangle r = new Rectangle(x, y, w, h);
+            outlines.Add(g);
+            g.DrawRectangle(blackPen, r);
+          //  g.Dispose();
+        }
+
+        public void ClearOutlines()
+        {
+            if (outlines.Count() != 0)
+            {
+                foreach(Graphics outline in outlines)
+                {
+                    outline.Clear(Color.White);
+                    outline.Dispose();
+                }
+                outlines.Clear();
+            }
+        }
+
+        public void DrawOutLine(Game game)
+        {
+            ClearOutlines();
+            for (int i = 0; i < game.numberOfSquares; i++)
+            {
+                int index = game.GetBySquare(i, 0);
+                int row = game.GetRowByIndex(index);
+                int col = game.GetColumnByIndex(index);
+                int x = 5 + 25 + 50 * col;
+                int y = menuStrip1.Height + 5 + 50 * row;
+                int w = 55 * game.squareWidth;
+                int h = 55 * game.squareHeight;
+                DrawSquare(x, y, w, h, 20);
+            }
+        }
         public void drawGrid(Game game)
         {
             int[] numbersArray = game.ToArray();
@@ -49,14 +88,15 @@ namespace Sudoku
                 int col = game.GetColumnByIndex(i);
                 bool isZero = game.originalNumbersArray[i] == 0;
                 if (isZero)
-                { 
-                    AddButton("","Sudoku", numbersArray[i].ToString(), row, col, 25);
+                {
+                    AddButton("", "Sudoku", numbersArray[i].ToString(), row, col, 25);
                 }
                 else
                 {
                     AddLabel("", "Sudoku", numbersArray[i].ToString(), row, col, 25);
                 }
             }
+            DrawOutLine(game);
         }
 
         public void DrawControlls(int n)
@@ -71,7 +111,7 @@ namespace Sudoku
         {
             
             int x = 10 + xOffset + 50 * column;
-            int y = menuStrip1.Height+10 + 50 * row ;
+            int y = menuStrip1.Height+10 + 50 * row;
             Button cell = new Button();
             cell.Name = name+row+"_"+column;
             cell.Height = 50;
@@ -150,12 +190,17 @@ namespace Sudoku
 
         private void RemoveGrid(int count)
         {
+            List<Control> itemsToRemove = new List<Control>();
             foreach (Control control in Controls)
             {
                 if (control.Tag != null && (control.Tag.ToString() == "Sudoku" || control.Tag.ToString() == "Control"))
                 {
-                    Controls.Remove(control);
+                    itemsToRemove.Add(control);
                 }
+            }
+            foreach(Control c in itemsToRemove)
+            {
+                Controls.Remove(c);
             }
         }
 
@@ -186,6 +231,11 @@ namespace Sudoku
         }
 
         private void loadSaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SudokuForm_Load(object sender, EventArgs e)
         {
 
         }
