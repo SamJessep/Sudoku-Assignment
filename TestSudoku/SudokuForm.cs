@@ -31,7 +31,7 @@ namespace Sudoku
             int H = menuStrip1.Height + 80 + (50 * (game.gridHeight + 2));
             int W = 40 + (50 * (game.gridWidth + 1));
             setWindowSize(W, H);
-            drawGrid(game);
+            DrawGrid(game);
             DrawControlls(game.numberOfSquares);
         }
 
@@ -48,7 +48,6 @@ namespace Sudoku
             Rectangle r = new Rectangle(x, y, w, h);
             outlines.Add(g);
             g.DrawRectangle(blackPen, r);
-          //  g.Dispose();
         }
 
         public void ClearOutlines()
@@ -79,23 +78,47 @@ namespace Sudoku
                 DrawSquare(x, y, w, h, 20);
             }
         }
-        public void drawGrid(Game game)
+        public void DrawGrid(Game game)
         {
+            Panel squarePanel;
             int[] numbersArray = game.ToArray();
-            for (int i = 0; i < numbersArray.Length; i++)
+            for (int s = 0; s< game.numberOfSquares; s++)
             {
-                int row = game.GetRowByIndex(i);
-                int col = game.GetColumnByIndex(i);
-                bool isZero = game.originalNumbersArray[i] == 0;
-                if (isZero)
+                int cellIndex = game.GetBySquare(s, 0);
+                int row = game.GetRowByIndex(cellIndex);
+                int col = game.GetColumnByIndex(cellIndex);
+                
+                squarePanel = new Panel();
+                squarePanel.Name = s.ToString();
+                squarePanel.Size = new Size(50*game.squareWidth, 50 * game.squareHeight);
+                squarePanel.Location = new Point(row*50, col*50);
+                squarePanel.BorderStyle = BorderStyle.FixedSingle;
+                
+                for(int c = 0; c< game.numberOfSquares; c++)
                 {
-                    AddButton("", "Sudoku", numbersArray[i].ToString(), row, col, 25);
+                    cellIndex = game.GetBySquare(s, c);
+                    row = game.GetRowByIndex(cellIndex);
+                    col = game.GetColumnByIndex(cellIndex);
+                    Button btn = MakeButton("", "Sudoku", numbersArray[cellIndex].ToString(), row, col, 25);
+                    squarePanel.Controls.Add(btn);
                 }
-                else
-                {
-                    AddLabel("", "Sudoku", numbersArray[i].ToString(), row, col, 25);
-                }
+                Controls.Add(squarePanel);
             }
+            //int[] numbersArray = game.ToArray();
+            //for (int i = 0; i < numbersArray.Length; i++)
+            //{
+            //    int row = game.GetRowByIndex(i);
+            //    int col = game.GetColumnByIndex(i);
+            //    bool isZero = game.originalNumbersArray[i] == 0;
+            //    if (isZero)
+            //    {
+            //        AddButton("", "Sudoku", numbersArray[i].ToString(), row, col, 25);
+            //    }
+            //    else
+            //    {
+            //        AddLabel("", "Sudoku", numbersArray[i].ToString(), row, col, 25);
+            //    }
+            //}
             DrawOutLine(game);
         }
 
@@ -103,45 +126,49 @@ namespace Sudoku
         {
             for(int i = 0; i<=n; i++)
             {
-                AddButton("inputBtn_","Control", i==0?"":i.ToString(), n+1, i, 0);
+                Controls.Add(MakeButton("inputBtn_","Control", i==0?"":i.ToString(), n+1, i, 0));
             }
         }
 
-        protected void AddButton(string name, string Tag, string text, int row, int column, int xOffset)
+        protected Button MakeButton(string name, string Tag, string text, int row, int column, int xOffset, bool enabled = true)
         {
             
-            int x = 10 + xOffset + 50 * column;
-            int y = menuStrip1.Height+10 + 50 * row;
-            Button cell = new Button();
-            cell.Name = name+row+"_"+column;
-            cell.Height = 50;
-            cell.Width = 50;
-            cell.Font = new Font("Arial", 20);
-            cell.Text = (text == 0.ToString())?"":text;
-            cell.Tag = Tag;
-            cell.Visible = true;
-            cell.Location = new Point(x,y);
+            int x = 50 * column;
+            int y = 50 * row;
+            Button cell = new Button
+            {
+                Name = name + row + "_" + column,
+                Height = 50,
+                Width = 50,
+                Font = new Font("Arial", 20),
+                Text = (text == 0.ToString()) ? "" : text,
+                Tag = Tag,
+                Visible = true,
+                Location = new Point(x, y),
+                Enabled = enabled
+            };
             cell.Click += GridButton_clicked;
-            Controls.Add(cell);
+            return cell;
         }
 
         protected void AddLabel(string name, string Tag, string text, int row, int column, int xOffset)
         {
             int x = 10 + xOffset + 50 * column;
             int y = menuStrip1.Height + 10 + 50 * row;
-            Label cell = new Label();
-            cell.Name = name + row + "_" + column;
-            cell.Height = 50;
-            cell.Width = 50;
-            cell.Font = new Font("Arial", 20);
-            cell.Text = text;
-            cell.Tag = Tag;
-            cell.BorderStyle = BorderStyle.FixedSingle;
-            cell.AutoSize = false;
-            cell.TextAlign = ContentAlignment.MiddleCenter;
-            cell.Visible = true;
-            cell.Location = new Point(x, y);
-            Controls.Add(cell);
+            Controls.Add(new Label
+            {
+                Name = name + row + "_" + column,
+                Height = 50,
+                Width = 50,
+                Font = new Font("Arial", 20),
+                Text = text,
+                Tag = Tag,
+                BorderStyle = BorderStyle.FixedSingle,
+                AutoSize = false,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Visible = true,
+                Location = new Point(x, y)
+            });
         }
         private void GridButton_clicked(object sender, EventArgs e)
         {
@@ -239,5 +266,16 @@ namespace Sudoku
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void Button1_EnabledChanged(Button sender, EventArgs e)
+        {
+            sender.ForeColor = sender.Enabled == false ? Color.Blue : Color.Red;
+            sender.BackColor = Color.AliceBlue;
+        }
+
     }
 }

@@ -16,7 +16,7 @@ namespace Sudoku
         {
             csv = GetRelativePath(csv, AppDomain.CurrentDomain.BaseDirectory);
             currentGameFile = csv;
-            string csvText = File.ReadAllText(@csv);
+            string csvText = File.ReadAllText(@Uri.UnescapeDataString(csv));
             Dictionary<string, string> csvParts = SplitInput(csvText);
             string OriginalSudoku = csvParts["OriginalSudoku"];
             string EditedSudoku = csvParts.ContainsKey("EditedSudoku") ? csvParts["EditedSudoku"]: csvParts["OriginalSudoku"];

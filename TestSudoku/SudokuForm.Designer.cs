@@ -67,28 +67,28 @@ namespace Sudoku
             this.newGameToolStripMenuItem,
             this.gameSaveToolStripMenuItem});
             this.loadSaveToolStripMenuItem.Name = "loadSaveToolStripMenuItem";
-            this.loadSaveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.loadSaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadSaveToolStripMenuItem.Text = "Load";
             this.loadSaveToolStripMenuItem.Click += new System.EventHandler(this.loadSaveToolStripMenuItem_Click);
             // 
             // newGameToolStripMenuItem
             // 
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newGameToolStripMenuItem.Text = "New Game";
             this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click_1);
             // 
             // gameSaveToolStripMenuItem
             // 
             this.gameSaveToolStripMenuItem.Name = "gameSaveToolStripMenuItem";
-            this.gameSaveToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.gameSaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gameSaveToolStripMenuItem.Text = "Game Save";
             this.gameSaveToolStripMenuItem.Click += new System.EventHandler(this.gameSaveToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save game";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
