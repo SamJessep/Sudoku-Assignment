@@ -17,6 +17,7 @@ namespace Sudoku
         GameController controller;
         private int SelectedVal;
         private List<Graphics> outlines = new List<Graphics>();
+
         public void SetController(GameController theController)
         {
             controller = theController;
@@ -78,32 +79,60 @@ namespace Sudoku
                 DrawSquare(x, y, w, h, 20);
             }
         }
+        public Button GetCellButton(Game game, int c, int s)
+        {
+            int[] numbersArray = game.ToArray();
+            int posIndex = game.GetBySquare(0, c);
+            int cellIndex = game.GetBySquare(s, c);
+            int row = game.GetRowByIndex(posIndex);
+            int col = game.GetColumnByIndex(posIndex);
+            Button btn = MakeButton(
+                game.GetRowByIndex(cellIndex) + "_" + game.GetColumnByIndex(cellIndex),
+                "Sudoku",
+                numbersArray[cellIndex].ToString(),
+                row,
+                col,
+                game.numbersArray[cellIndex] == game.originalNumbersArray[cellIndex] && game.numbersArray[cellIndex] != 0
+            );
+            btn.BackColor = Color.White;
+            return btn;
+        }
         public void DrawGrid(Game game)
         {
+            Panel gamePanel = new Panel
+            {
+                Name = "SudokuGame",
+                Size = new Size((game.gridWidth * 50) + 5, (game.gridHeight * 50) + 5),
+                Anchor = AnchorStyles.None,
+                BorderStyle = BorderStyle.None
+            };
+            gamePanel.Location = new Point((Width - gamePanel.Width) / 2, menuStrip1.Height);
+
             Panel squarePanel;
-            int[] numbersArray = game.ToArray();
-            for (int s = 0; s< game.numberOfSquares; s++)
+            for (int s = 0; s < game.numberOfSquares; s++)
             {
                 int cellIndex = game.GetBySquare(s, 0);
                 int row = game.GetRowByIndex(cellIndex);
                 int col = game.GetColumnByIndex(cellIndex);
-                
-                squarePanel = new Panel();
-                squarePanel.Name = s.ToString();
-                squarePanel.Size = new Size(50*game.squareWidth, 50 * game.squareHeight);
-                squarePanel.Location = new Point(row*50, col*50);
-                squarePanel.BorderStyle = BorderStyle.FixedSingle;
-                
-                for(int c = 0; c< game.numberOfSquares; c++)
+
+                squarePanel = new Panel
                 {
-                    cellIndex = game.GetBySquare(s, c);
-                    row = game.GetRowByIndex(cellIndex);
-                    col = game.GetColumnByIndex(cellIndex);
-                    Button btn = MakeButton("", "Sudoku", numbersArray[cellIndex].ToString(), row, col, 25);
-                    squarePanel.Controls.Add(btn);
+                    Name = s.ToString(),
+                    AutoSize = true,
+                    Size = new Size(50 * game.squareWidth, 50 * game.squareHeight),
+                    Location = new Point(col * 50, row * 50),
+                    BorderStyle = BorderStyle.FixedSingle,
+                    BackColor = Color.Black
+                };
+
+                for (int c = 0; c< game.numberOfSquares; c++)
+                {
+                    squarePanel.Controls.Add(GetCellButton(game, c, s));
                 }
-                Controls.Add(squarePanel);
+                gamePanel.Controls.Add(squarePanel);
+                
             }
+            Controls.Add(gamePanel);
             //int[] numbersArray = game.ToArray();
             //for (int i = 0; i < numbersArray.Length; i++)
             //{
@@ -119,25 +148,26 @@ namespace Sudoku
             //        AddLabel("", "Sudoku", numbersArray[i].ToString(), row, col, 25);
             //    }
             //}
-            DrawOutLine(game);
+            //DrawOutLine(game);
         }
 
         public void DrawControlls(int n)
         {
             for(int i = 0; i<=n; i++)
             {
-                Controls.Add(MakeButton("inputBtn_","Control", i==0?"":i.ToString(), n+1, i, 0));
+                Controls.Add(MakeButton("inputBtn_","Control", i.ToString(), n+1, i));
             }
         }
 
-        protected Button MakeButton(string name, string Tag, string text, int row, int column, int xOffset, bool enabled = true)
+        protected Button MakeButton(string name, string Tag, string text, int row, int column, bool isStartingNumber = false)
         {
             
             int x = 50 * column;
             int y = 50 * row;
+            bool isControl = Tag == "Control";
             Button cell = new Button
             {
-                Name = name + row + "_" + column,
+                Name = name,
                 Height = 50,
                 Width = 50,
                 Font = new Font("Arial", 20),
@@ -145,7 +175,7 @@ namespace Sudoku
                 Tag = Tag,
                 Visible = true,
                 Location = new Point(x, y),
-                Enabled = enabled
+                Enabled = isControl || !isStartingNumber
             };
             cell.Click += GridButton_clicked;
             return cell;
@@ -220,7 +250,7 @@ namespace Sudoku
             List<Control> itemsToRemove = new List<Control>();
             foreach (Control control in Controls)
             {
-                if (control.Tag != null && (control.Tag.ToString() == "Sudoku" || control.Tag.ToString() == "Control"))
+                if (control.Name == "SudokuGame" || control.Tag == "Control")
                 {
                     itemsToRemove.Add(control);
                 }
