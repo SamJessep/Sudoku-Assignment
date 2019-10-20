@@ -39,6 +39,7 @@ namespace Sudoku
             this.gameSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.Open = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +68,7 @@ namespace Sudoku
             this.newGameToolStripMenuItem,
             this.gameSaveToolStripMenuItem});
             this.loadSaveToolStripMenuItem.Name = "loadSaveToolStripMenuItem";
-            this.loadSaveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.loadSaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.loadSaveToolStripMenuItem.Text = "Load";
             this.loadSaveToolStripMenuItem.Click += new System.EventHandler(this.loadSaveToolStripMenuItem_Click);
             // 
@@ -88,7 +89,7 @@ namespace Sudoku
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save game";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -96,11 +97,22 @@ namespace Sudoku
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // Open
+            // 
+            this.Open.Location = new System.Drawing.Point(367, 1);
+            this.Open.Name = "Open";
+            this.Open.Size = new System.Drawing.Size(75, 23);
+            this.Open.TabIndex = 2;
+            this.Open.Text = "Open";
+            this.Open.UseVisualStyleBackColor = true;
+            this.Open.Click += new System.EventHandler(this.Open_Click);
+            // 
             // SudokuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Open);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "SudokuForm";
@@ -121,5 +133,6 @@ namespace Sudoku
         private ToolStripMenuItem loadSaveToolStripMenuItem;
         private ToolStripMenuItem newGameToolStripMenuItem;
         private ToolStripMenuItem gameSaveToolStripMenuItem;
+        private Button Open;
     }
 }

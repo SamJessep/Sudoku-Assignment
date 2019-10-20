@@ -50,6 +50,12 @@
   <ItemGroup>
     <Compile Include="ConsoleView.cs" />
     <Compile Include="Editor.cs" />
+    <Compile Include="loadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="loadForm.Designer.cs">
+      <DependentUpon>loadForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormView.cs" />
     <Compile Include="SudokuForm.cs">
       <SubType>Form</SubType>
@@ -79,6 +85,9 @@
     <None Include="DesignClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="loadForm.resx">
+      <DependentUpon>loadForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SudokuForm.resx">
       <DependentUpon>SudokuForm.cs</DependentUpon>
     </EmbeddedResource>

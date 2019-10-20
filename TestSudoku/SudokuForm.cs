@@ -33,7 +33,7 @@ namespace Sudoku
             int W = 40 + (50 * (game.gridWidth + 1));
             setWindowSize(W, H);
             DrawGrid(game);
-            DrawControlls(game.numberOfSquares);
+            DrawControls(game.numberOfSquares);
         }
 
         private void setWindowSize(int w,int h)
@@ -151,7 +151,7 @@ namespace Sudoku
             //DrawOutLine(game);
         }
 
-        public void DrawControlls(int n)
+        public void DrawControls(int n)
         {
             for(int i = 0; i<=n; i++)
             {
@@ -181,11 +181,11 @@ namespace Sudoku
             return cell;
         }
 
-        protected void AddLabel(string name, string Tag, string text, int row, int column, int xOffset)
+        public Label AddLabel(string name, string Tag, string text, int row, int column)
         {
-            int x = 10 + xOffset + 50 * column;
+            int x = 10 + 50 * column;
             int y = menuStrip1.Height + 10 + 50 * row;
-            Controls.Add(new Label
+            Label l = new Label
             {
                 Name = name + row + "_" + column,
                 Height = 50,
@@ -198,7 +198,8 @@ namespace Sudoku
                 TextAlign = ContentAlignment.MiddleCenter,
                 Visible = true,
                 Location = new Point(x, y)
-            });
+            };
+            return l;
         }
         private void GridButton_clicked(object sender, EventArgs e)
         {
@@ -307,5 +308,15 @@ namespace Sudoku
             sender.BackColor = Color.AliceBlue;
         }
 
+        private void Open_Click(object sender, EventArgs e)
+        {
+            loadForm f = new loadForm(this, controller.game);
+            //f.Show();
+
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                LoadGame(f.loadingGameSave);
+            }
+        }
     }
 }
