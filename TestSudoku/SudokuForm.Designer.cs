@@ -32,66 +32,12 @@ namespace Sudoku
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gameSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Open = new System.Windows.Forms.Button();
-            this.menuStrip1.SuspendLayout();
+            this.SaveBtn = new System.Windows.Forms.Button();
+            this.MenuPanel = new System.Windows.Forms.Panel();
+            this.MenuPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadSaveToolStripMenuItem,
-            this.saveToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // loadSaveToolStripMenuItem
-            // 
-            this.loadSaveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newGameToolStripMenuItem,
-            this.gameSaveToolStripMenuItem});
-            this.loadSaveToolStripMenuItem.Name = "loadSaveToolStripMenuItem";
-            this.loadSaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.loadSaveToolStripMenuItem.Text = "Load";
-            this.loadSaveToolStripMenuItem.Click += new System.EventHandler(this.loadSaveToolStripMenuItem_Click);
-            // 
-            // newGameToolStripMenuItem
-            // 
-            this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.newGameToolStripMenuItem.Text = "New Game";
-            this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click_1);
-            // 
-            // gameSaveToolStripMenuItem
-            // 
-            this.gameSaveToolStripMenuItem.Name = "gameSaveToolStripMenuItem";
-            this.gameSaveToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.gameSaveToolStripMenuItem.Text = "Game Save";
-            this.gameSaveToolStripMenuItem.Click += new System.EventHandler(this.gameSaveToolStripMenuItem_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save game";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -99,40 +45,69 @@ namespace Sudoku
             // 
             // Open
             // 
-            this.Open.Location = new System.Drawing.Point(367, 1);
+            this.Open.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Open.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Open.BackColor = System.Drawing.SystemColors.Menu;
+            this.Open.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Open.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Open.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Open.Location = new System.Drawing.Point(5, 5);
             this.Open.Name = "Open";
-            this.Open.Size = new System.Drawing.Size(75, 23);
+            this.Open.Size = new System.Drawing.Size(100, 30);
             this.Open.TabIndex = 2;
-            this.Open.Text = "Open";
-            this.Open.UseVisualStyleBackColor = true;
+            this.Open.Tag = "Load/Save";
+            this.Open.Text = "Load";
+            this.Open.UseVisualStyleBackColor = false;
             this.Open.Click += new System.EventHandler(this.Open_Click);
+            // 
+            // SaveBtn
+            // 
+            this.SaveBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SaveBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SaveBtn.BackColor = System.Drawing.SystemColors.Menu;
+            this.SaveBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SaveBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.SaveBtn.Location = new System.Drawing.Point(110, 5);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(100, 30);
+            this.SaveBtn.TabIndex = 3;
+            this.SaveBtn.Tag = "Load/Save";
+            this.SaveBtn.Text = "Save";
+            this.SaveBtn.UseVisualStyleBackColor = false;
+            this.SaveBtn.Visible = false;
+            this.SaveBtn.Click += new System.EventHandler(this.saveButton_click);
+            // 
+            // MenuPanel
+            // 
+            this.MenuPanel.AutoSize = true;
+            this.MenuPanel.Controls.Add(this.SaveBtn);
+            this.MenuPanel.Controls.Add(this.Open);
+            this.MenuPanel.Location = new System.Drawing.Point(0, 0);
+            this.MenuPanel.Name = "MenuPanel";
+            this.MenuPanel.Size = new System.Drawing.Size(294, 57);
+            this.MenuPanel.TabIndex = 4;
             // 
             // SudokuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.Open);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.MenuPanel);
             this.Name = "SudokuForm";
             this.Text = "Sudoku";
-            this.Load += new System.EventHandler(this.SudokuForm_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.MenuPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private ToolStripMenuItem loadSaveToolStripMenuItem;
-        private ToolStripMenuItem newGameToolStripMenuItem;
-        private ToolStripMenuItem gameSaveToolStripMenuItem;
         private Button Open;
+        private Button SaveBtn;
+        private Panel MenuPanel;
     }
 }
