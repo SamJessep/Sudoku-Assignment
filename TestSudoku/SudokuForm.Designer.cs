@@ -36,6 +36,7 @@ namespace Sudoku
             this.Open = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.MenuPanel = new System.Windows.Forms.Panel();
+            this.Check = new System.Windows.Forms.Button();
             this.MenuPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +55,7 @@ namespace Sudoku
             this.Open.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Open.Location = new System.Drawing.Point(5, 5);
             this.Open.Name = "Open";
-            this.Open.Size = new System.Drawing.Size(100, 30);
+            this.Open.Size = new System.Drawing.Size(100, 40);
             this.Open.TabIndex = 2;
             this.Open.Tag = "Load/Save";
             this.Open.Text = "Load";
@@ -72,7 +73,7 @@ namespace Sudoku
             this.SaveBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.SaveBtn.Location = new System.Drawing.Point(110, 5);
             this.SaveBtn.Name = "SaveBtn";
-            this.SaveBtn.Size = new System.Drawing.Size(100, 30);
+            this.SaveBtn.Size = new System.Drawing.Size(100, 40);
             this.SaveBtn.TabIndex = 3;
             this.SaveBtn.Tag = "Load/Save";
             this.SaveBtn.Text = "Save";
@@ -83,17 +84,38 @@ namespace Sudoku
             // MenuPanel
             // 
             this.MenuPanel.AutoSize = true;
+            this.MenuPanel.Controls.Add(this.Check);
             this.MenuPanel.Controls.Add(this.SaveBtn);
             this.MenuPanel.Controls.Add(this.Open);
             this.MenuPanel.Location = new System.Drawing.Point(0, 0);
             this.MenuPanel.Name = "MenuPanel";
-            this.MenuPanel.Size = new System.Drawing.Size(294, 57);
+            this.MenuPanel.Size = new System.Drawing.Size(336, 57);
             this.MenuPanel.TabIndex = 4;
+            // 
+            // Check
+            // 
+            this.Check.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Check.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Check.BackColor = System.Drawing.SystemColors.Menu;
+            this.Check.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Check.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Check.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Check.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Check.Location = new System.Drawing.Point(215, 5);
+            this.Check.Name = "Check";
+            this.Check.Size = new System.Drawing.Size(100, 40);
+            this.Check.TabIndex = 3;
+            this.Check.Tag = "Load/Save";
+            this.Check.Text = "Check";
+            this.Check.UseVisualStyleBackColor = false;
+            this.Check.Visible = false;
+            this.Check.Click += new System.EventHandler(this.checkBtnClicked);
             // 
             // SudokuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LightGoldenrodYellow;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.MenuPanel);
             this.Name = "SudokuForm";
@@ -109,5 +131,6 @@ namespace Sudoku
         private Button Open;
         private Button SaveBtn;
         private Panel MenuPanel;
+        private Button Check;
     }
 }

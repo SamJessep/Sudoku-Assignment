@@ -31,7 +31,7 @@ namespace FeatureTests
         {
             //Arrange 
             Game theGame = new Game();
-            theGame.FromCSV("valid3X3",false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\valid3X3.csv")),false);
             theGame.SetMaxValue(100);
             //Act 
             int actualValue = theGame.numbersArray[5];
@@ -46,7 +46,7 @@ namespace FeatureTests
             //Arrange 
             Game theGame = new Game();
             //"{BaseScore:100,Highscore:2,HintsUsed:2,SquareHeight:2,SquareWidth:3,TargetTime:200,TimeSpent:500000}"
-            string csvText = System.IO.File.ReadAllText(@"..\..\..\Export\valid3X3.csv");
+            string csvText = System.IO.File.ReadAllText(@"..\..\..\GameSaves\valid3X3.csv");
             Dictionary<string, string> csvParts = theGame.SplitInput(csvText);
             GameSettings jsonObj = theGame.ReadJsonSettings(csvParts["Settings"]);
 
@@ -63,7 +63,7 @@ namespace FeatureTests
         {
             //Arrange 
             Game theGame = new Game();
-            theGame.FromCSV("valid3X3", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\valid3X3.csv")), false);
             theGame.numbersArray[0] = 100;
 
             //Act 
@@ -77,7 +77,7 @@ namespace FeatureTests
         {
             //Arrange 
             Game theGame = new Game();
-            theGame.FromCSV("valid3X3", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\valid3X3.csv")), false);
             theGame.SetCell(100, 0);
             //Act 
             int actualValue = theGame.numbersArray[0];
@@ -90,7 +90,7 @@ namespace FeatureTests
         {
             //Arrange 
             Game theGame = new Game();
-            theGame.FromCSV("valid3X3", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\valid3X3.csv")), false);
             //Act 
             int actualValue = theGame.MakeSquare(1).Length;
             int expectedValue = 4;
@@ -102,7 +102,7 @@ namespace FeatureTests
         {
             //Arrange 
             Game theGame = new Game();
-            theGame.FromCSV("valid3X3", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\valid3X3.csv")), false);
             //Act 
             int actualValue = theGame.MakeLine(theGame.squareWidth).Length;
             int expectedValue = 40;

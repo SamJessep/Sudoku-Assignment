@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sudoku;
+using System.IO;
 
 namespace FeatureTests
 {
@@ -12,7 +13,7 @@ namespace FeatureTests
         {
             //Arrange 
             Game theGame = new Game();
-            theGame.FromCSV("valid3x3Incomplete", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\invalid3X3Incomplete.csv")), false);
             //Act 
             int actualLength = theGame.GetHint().Length;
             int expectedLength = 2;
@@ -29,7 +30,7 @@ namespace FeatureTests
         {
             //Arrange 
             Game theGame = new Game();
-            theGame.FromCSV("valid3x3", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\valid3X3.csv")), false);
             //Act 
             int actualLength = theGame.GetHint().Length;
             int expectedLength = 0;

@@ -2,6 +2,7 @@
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sudoku;
+using System.IO;
 
 namespace FeatureTests
 {
@@ -14,7 +15,7 @@ namespace FeatureTests
             //check score is higher if if sudoku is completed quicker
             Game theGame = new Game();
             //Setup
-            theGame.FromCSV("valid3X3", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\valid3X3.csv")), false);
             theGame.StartTimer();
             Thread.Sleep(3000);
             theGame.StopTimer();
@@ -29,7 +30,7 @@ namespace FeatureTests
         public void SettingHighScore()
         {
             Game theGame = new Game();
-            theGame.FromCSV("valid3x3Incomplete", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\invalid3X3Incomplete.csv")), false);
             theGame.timeTaken = 50;
             theGame.targetTime = 100;
             theGame.SetHighScore();
@@ -44,7 +45,7 @@ namespace FeatureTests
         public void SettingHighScore2()
         {
             Game theGame = new Game();
-            theGame.FromCSV("valid3x3Incomplete", false);
+            theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\invalid3X3Incomplete.csv")), false);
             theGame.highScore = 10000;
             theGame.timeTaken = 1000;
             theGame.targetTime = 100;

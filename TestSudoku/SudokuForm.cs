@@ -107,7 +107,6 @@ namespace Sudoku
                 Size = new Size(((n + 1) * BoxWidth), 50),
                 Anchor = (AnchorStyles.Top),
                 BorderStyle = BorderStyle.None,
-                BackColor = Color.Red
             };
             SudokuControls.Location = new Point((Width-SudokuControls.Width)/2, (n + 1) * BoxWidth + MenuPanel.Height);
             for (int i = 0; i<=n; i++)
@@ -167,6 +166,7 @@ namespace Sudoku
             {
                 btnText = btnText == "" ? 0.ToString() : btnText;
                 SelectedVal = int.Parse(btnText);
+                HighlightSelected();
             }
             else
             {
@@ -178,6 +178,20 @@ namespace Sudoku
             }
         }
 
+        private void HighlightSelected()
+        {
+            foreach (Button btn in Controls["SudokuControls"].Controls)
+            {
+                if (btn.Text == SelectedVal.ToString() || (btn.Text == "" && SelectedVal == 0))
+                {
+                    btn.BackColor = Color.White;
+                }
+                else
+                {
+                    btn.BackColor = Color.LightGoldenrodYellow;
+                }
+            }
+        }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -218,13 +232,12 @@ namespace Sudoku
             var filePath = "";
             theDialog.Title = "Select Sudoku CSV file";
             theDialog.Filter = "CSV files|*.csv";
-            theDialog.InitialDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Export")); ;
+            theDialog.InitialDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\GameSaves")); ;
             if (theDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    filePath = openFileDialog1.FileName;
-                    return filePath;
+                    filePath = theDialog.FileName;
                 }
                 catch (SecurityException ex)
                 {
@@ -257,6 +270,19 @@ namespace Sudoku
             //Load File for game preview
             if(path != null)
             {
+                if (controller.game.originalNumbersArray != null)
+                {
+                    bool hasSaved = Enumerable.SequenceEqual(controller.game.numbersArray, controller.game.originalNumbersArray);
+                    if (!hasSaved)
+                    {
+                        var confirmResult = MessageBox.Show("Are you sure you want to load a new file, you will lose your current progress", "Warning",
+                                         MessageBoxButtons.YesNo);
+                        if (confirmResult == DialogResult.No)
+                        {
+                            return;
+                        }
+                    }
+                }
                 controller.game.FromCSV(path, true);
                 ClearGame();
                 loadForm f = new loadForm(this, controller.game);
@@ -265,11 +291,13 @@ namespace Sudoku
                     controller.game.FromCSV(path, f.loadingGameSave);
                     MakeSudoku(controller.game);
                     MenuPanel.Controls["SaveBtn"].Visible = true;
+                    MenuPanel.Controls["Check"].Visible = true;
                 }
                 else
                 {
                     MessageBox.Show("Game Load aborted");
                     MenuPanel.Controls["SaveBtn"].Visible = false;
+                    MenuPanel.Controls["Check"].Visible = false;
                 }
             }
         }
@@ -278,6 +306,13 @@ namespace Sudoku
         {
             controller.game.ToCSV();
             MessageBox.Show("Game Saved");
+        }
+
+        private void checkBtnClicked(Object sender, EventArgs e)
+        {
+            Color color = controller.game.IsPuzzleValid() ? Color.Green : Color.Red;
+            Button btn = (Button)sender;
+            btn.BackColor = color;
         }
     }
 }
