@@ -36,10 +36,9 @@ namespace Sudoku
             this.Open = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.MenuPanel = new System.Windows.Forms.Panel();
-            this.SudokuMaker = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.Check = new System.Windows.Forms.Button();
             this.ResetBtn = new System.Windows.Forms.Button();
+            this.SudokuMaker = new System.Windows.Forms.Button();
+            this.Check = new System.Windows.Forms.Button();
             this.MenuPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,6 +97,24 @@ namespace Sudoku
             this.MenuPanel.Size = new System.Drawing.Size(788, 51);
             this.MenuPanel.TabIndex = 4;
             // 
+            // ResetBtn
+            // 
+            this.ResetBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ResetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ResetBtn.BackColor = System.Drawing.SystemColors.Menu;
+            this.ResetBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ResetBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.ResetBtn.Location = new System.Drawing.Point(319, 5);
+            this.ResetBtn.Name = "ResetBtn";
+            this.ResetBtn.Size = new System.Drawing.Size(100, 40);
+            this.ResetBtn.TabIndex = 6;
+            this.ResetBtn.Tag = "Load/Save";
+            this.ResetBtn.Text = "Reset";
+            this.ResetBtn.UseVisualStyleBackColor = false;
+            this.ResetBtn.Click += new System.EventHandler(this.ResetBtn_Click);
+            // 
             // SudokuMaker
             // 
             this.SudokuMaker.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -115,16 +132,6 @@ namespace Sudoku
             this.SudokuMaker.Text = "Sudoku Maker";
             this.SudokuMaker.UseVisualStyleBackColor = false;
             this.SudokuMaker.Click += new System.EventHandler(this.SudokuMaker_Click);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(607, 110);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 50);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "66";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // Check
             // 
@@ -145,31 +152,12 @@ namespace Sudoku
             this.Check.Visible = false;
             this.Check.Click += new System.EventHandler(this.checkBtnClicked);
             // 
-            // ResetBtn
-            // 
-            this.ResetBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ResetBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ResetBtn.BackColor = System.Drawing.SystemColors.Menu;
-            this.ResetBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ResetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ResetBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ResetBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ResetBtn.Location = new System.Drawing.Point(319, 5);
-            this.ResetBtn.Name = "ResetBtn";
-            this.ResetBtn.Size = new System.Drawing.Size(100, 40);
-            this.ResetBtn.TabIndex = 6;
-            this.ResetBtn.Tag = "Load/Save";
-            this.ResetBtn.Text = "Reset";
-            this.ResetBtn.UseVisualStyleBackColor = false;
-            this.ResetBtn.Click += new System.EventHandler(this.ResetBtn_Click);
-            // 
             // SudokuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightGoldenrodYellow;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.MenuPanel);
             this.Name = "SudokuForm";
             this.Text = "Sudoku";
@@ -185,7 +173,6 @@ namespace Sudoku
         private Button SaveBtn;
         private Panel MenuPanel;
         private Button SudokuMaker;
-        private Button button1;
         private Button ResetBtn;
         private Button Check;
     }

@@ -76,26 +76,10 @@ namespace Sudoku
             controls.Name = "Sudokucontrols";
             TemplateArea.Height = Grid.Height+(Height-Grid.Height)/2;
             TemplateArea.Width = Width;
-            UpdateClickEvents(Grid, controls);
             TemplateArea.Controls.Add(Grid);
             TemplateArea.Controls.Add(controls);
             TemplateArea.BackColor = Color.Red;
             
-        }
-
-        private void UpdateClickEvents(Panel Grid, Panel controls)
-        {
-            foreach(Panel square in Grid.Controls)
-            {
-                foreach (Button b in square.Controls)
-                {
-                    b.Click -= delegate (object sender, EventArgs e) { p.GridButton_clicked(sender, e); };
-                }
-            }
-            foreach (Button b in controls.Controls)
-            {
-                b.Click-= delegate (object sender, EventArgs e) { p.GridButton_clicked(sender, e); };
-            }
         }
 
     }
