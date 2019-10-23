@@ -70,14 +70,8 @@ namespace Sudoku
         {
             ClearTemplate();
             g.SetSettings(GetSudokuSettings(), false);
-            Panel Grid = p.DrawGrid(g, TemplateArea.Controls);
-            Panel controls = p.DrawControls(g.numberOfSquares, g);
-            Grid.Name = "SudokuGame";
-            controls.Name = "Sudokucontrols";
-            TemplateArea.Height = Grid.Height+(Height-Grid.Height)/2;
-            TemplateArea.Width = Width;
-            TemplateArea.Controls.Add(Grid);
-            TemplateArea.Controls.Add(controls);
+            GameGrid GG = new GameGrid(g, this, 50);
+            TemplateArea.Controls.Add(GG.MakeSudoku());
             TemplateArea.BackColor = Color.Red;
             
         }

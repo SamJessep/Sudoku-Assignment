@@ -38,6 +38,11 @@ namespace Sudoku
             Controls.Add(DrawControls(game.numberOfSquares, game));
         }
 
+        public void DrawGame(Game game)
+        {
+            Controls.Add(DrawGrid(game));
+            Controls.Add(DrawControls(game.numberOfSquares, game));
+        }
         private void setWindowSize(int w,int h)
         {
             Width = w;
@@ -63,7 +68,7 @@ namespace Sudoku
             btn.BackColor = Color.White;
             return btn;
         }
-        public Panel DrawGrid(Game game, Control.ControlCollection controls = null)
+        public Panel DrawGrid(Game game)
         {
             Panel gamePanel = new Panel
             {
@@ -94,7 +99,7 @@ namespace Sudoku
                 for (int c = 0; c< game.numberOfSquares; c++)
                 {
                     Button cell = GetCellButton(game, c, s);
-                    cell.Click += delegate (object sender, EventArgs e) { GridButton_clicked(sender, e); };
+                    cell.Click += GridButton_clicked;
                     squarePanel.Controls.Add(cell);
                     
                 }
@@ -117,7 +122,7 @@ namespace Sudoku
             for (int i = 0; i<= numberOfControls; i++)
             {
                 Button cell = MakeButton("inputBtn_","Control", i.ToString(), 0, i, g);
-                cell.Click += delegate (object sender, EventArgs e) { GridButton_clicked(sender, e); };
+                cell.Click += GridButton_clicked;
                 SudokuControls.Controls.Add(cell);
             }
             return SudokuControls;
@@ -167,16 +172,15 @@ namespace Sudoku
             return l;
         }
         
-        public void GridButton_clicked(object sender, EventArgs e,Control.ControlCollection control = null, Game g = null)
+        public void GridButton_clicked(object sender, EventArgs e)
         {
-            g = g ?? controller.game;
             Button BtnClicked = (Button)sender;
             string btnText = BtnClicked.Text;
             if (BtnClicked.Name.Contains("inputBtn_"))
             {
                 btnText = btnText == "" ? 0.ToString() : btnText;
                 SelectedVal = int.Parse(btnText);
-                HighlightSelected(control ?? Controls);
+                HighlightSelected(Controls);
             }
             else
             {
@@ -185,8 +189,8 @@ namespace Sudoku
                 int fontSize = BtnClicked.Text.Length > 1 ? (int)(textFontSize*0.75) : fontSize = textFontSize;
                 BtnClicked.Font = new Font("Arial", fontSize);
                 string[] ColRow = BtnClicked.Name.Split('_');
-                int cellIndex = g.GetByRow(int.Parse(ColRow[0]), int.Parse(ColRow[1]));
-                g.SetCell(SelectedVal, cellIndex);
+                int cellIndex = controller.game.GetByRow(int.Parse(ColRow[0]), int.Parse(ColRow[1]));
+                controller.game.SetCell(SelectedVal, cellIndex);
             }
         }
 

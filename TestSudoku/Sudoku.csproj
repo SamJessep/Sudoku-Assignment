@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="ConsoleView.cs" />
     <Compile Include="Editor.cs" />
+    <Compile Include="GameGrid.cs" />
     <Compile Include="loadForm.cs">
       <SubType>Form</SubType>
     </Compile>
