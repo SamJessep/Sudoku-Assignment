@@ -17,6 +17,7 @@ namespace Sudoku
         private const int BoxWidth = 50;
         GameController controller;
         private int SelectedVal;
+        private int textFontSize = 20;
 
         public void SetController(GameController theController)
         {
@@ -33,8 +34,8 @@ namespace Sudoku
             int H = 80 + BoxWidth * (game.gridHeight + 2);
             int W = 40 + BoxWidth * (game.gridWidth + 1);
             setWindowSize(W, H);
-            DrawGrid(game);
-            DrawControls(game.numberOfSquares);
+            Controls.Add(DrawGrid(game));
+            Controls.Add(DrawControls(game.numberOfSquares, game));
         }
 
         private void setWindowSize(int w,int h)
@@ -56,12 +57,13 @@ namespace Sudoku
                 numbersArray[cellIndex].ToString(),
                 row,
                 col,
+                game,
                 game.numbersArray[cellIndex] == game.originalNumbersArray[cellIndex] && game.numbersArray[cellIndex] != 0
             );
             btn.BackColor = Color.White;
             return btn;
         }
-        public void DrawGrid(Game game)
+        public Panel DrawGrid(Game game, Control.ControlCollection controls = null)
         {
             Panel gamePanel = new Panel
             {
@@ -91,50 +93,55 @@ namespace Sudoku
 
                 for (int c = 0; c< game.numberOfSquares; c++)
                 {
-                    squarePanel.Controls.Add(GetCellButton(game, c, s));
+                    Button cell = GetCellButton(game, c, s);
+                    cell.Click += delegate (object sender, EventArgs e) { GridButton_clicked(sender, e); };
+                    squarePanel.Controls.Add(cell);
+                    
                 }
                 gamePanel.Controls.Add(squarePanel);
                 
             }
-            Controls.Add(gamePanel);
+            return gamePanel;
         }
 
-        public void DrawControls(int n)
+        public Panel DrawControls(int numberOfControls, Game g)
         {
             Panel SudokuControls = new Panel
             {
                 Name = "SudokuControls",
-                Size = new Size(((n + 1) * BoxWidth), 50),
+                Size = new Size(((numberOfControls + 1) * BoxWidth), 50),
                 Anchor = (AnchorStyles.Top),
                 BorderStyle = BorderStyle.None,
             };
-            SudokuControls.Location = new Point((Width-SudokuControls.Width)/2, (n + 1) * BoxWidth + MenuPanel.Height);
-            for (int i = 0; i<=n; i++)
+            SudokuControls.Location = new Point((Width-SudokuControls.Width)/2, (numberOfControls + 1) * BoxWidth + MenuPanel.Height);
+            for (int i = 0; i<= numberOfControls; i++)
             {
-                SudokuControls.Controls.Add(MakeButton("inputBtn_","Control", i.ToString(), 0, i));
+                Button cell = MakeButton("inputBtn_","Control", i.ToString(), 0, i, g);
+                cell.Click += delegate (object sender, EventArgs e) { GridButton_clicked(sender, e); };
+                SudokuControls.Controls.Add(cell);
             }
-            Controls.Add(SudokuControls);
+            return SudokuControls;
         }
 
-        protected Button MakeButton(string name, string Tag, string text, int row, int column, bool isStartingNumber = false)
+        protected Button MakeButton(string name, string Tag, string text, int row, int column, Game game, bool isStartingNumber = false)
         {
             
             int x = BoxWidth * column;
             int y = BoxWidth * row;
+            int fontSize = text.ToCharArray().Length > 1 ? (int)(textFontSize*0.75) : textFontSize;
             bool isControl = Tag == "Control";
             Button cell = new Button
             {
                 Name = name,
                 Height = BoxWidth,
                 Width = BoxWidth,
-                Font = new Font("Arial", 20),
+                Font = new Font("Arial", fontSize),
                 Text = (text == 0.ToString()) ? "" : text,
                 Tag = Tag,
                 Visible = true,
                 Location = new Point(x, y),
                 Enabled = isControl || !isStartingNumber
             };
-            cell.Click += GridButton_clicked;
             return cell;
         }
 
@@ -142,12 +149,13 @@ namespace Sudoku
         {
             int x = BoxWidth * column;
             int y = BoxWidth * row;
+            int fontSize = text.ToCharArray().Length > 1 ? (int)(textFontSize * 0.75) : textFontSize;
             Label l = new Label
             {
                 Name = name + row + "_" + column,
                 Height = BoxWidth,
                 Width = BoxWidth,
-                Font = new Font("Arial", 20),
+                Font = new Font("Arial", fontSize),
                 Text = text,
                 Tag = Tag,
                 BorderStyle = BorderStyle.FixedSingle,
@@ -158,29 +166,33 @@ namespace Sudoku
             };
             return l;
         }
-        private void GridButton_clicked(object sender, EventArgs e)
+        
+        public void GridButton_clicked(object sender, EventArgs e,Control.ControlCollection control = null, Game g = null)
         {
+            g = g ?? controller.game;
             Button BtnClicked = (Button)sender;
             string btnText = BtnClicked.Text;
             if (BtnClicked.Name.Contains("inputBtn_"))
             {
                 btnText = btnText == "" ? 0.ToString() : btnText;
                 SelectedVal = int.Parse(btnText);
-                HighlightSelected();
+                HighlightSelected(control ?? Controls);
             }
             else
             {
 
                 BtnClicked.Text = SelectedVal==0?"":SelectedVal.ToString();
+                int fontSize = BtnClicked.Text.Length > 1 ? (int)(textFontSize*0.75) : fontSize = textFontSize;
+                BtnClicked.Font = new Font("Arial", fontSize);
                 string[] ColRow = BtnClicked.Name.Split('_');
-                int cellIndex = controller.game.GetByRow(int.Parse(ColRow[0]), int.Parse(ColRow[1]));
-                controller.game.SetCell(SelectedVal, cellIndex);
+                int cellIndex = g.GetByRow(int.Parse(ColRow[0]), int.Parse(ColRow[1]));
+                g.SetCell(SelectedVal, cellIndex);
             }
         }
 
-        private void HighlightSelected()
+        private void HighlightSelected(Control.ControlCollection c)
         {
-            foreach (Button btn in Controls["SudokuControls"].Controls)
+            foreach (Button btn in c["SudokuControls"].Controls)
             {
                 if (btn.Text == SelectedVal.ToString() || (btn.Text == "" && SelectedVal == 0))
                 {
@@ -191,26 +203,6 @@ namespace Sudoku
                     btn.BackColor = Color.LightGoldenrodYellow;
                 }
             }
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.game.ToCSV();
-        }
-
-        private void gameSaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LoadGame(true);
-        }
-
-        private void newGameToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            LoadGame(false);
-        }
-
-        private void LoadGame(bool isLoadingSave)
-        {
-            
         }
 
         private void ClearGame()
@@ -253,11 +245,6 @@ namespace Sudoku
             return filePath;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Controls.RemoveAt(Controls.Count-1);
-        }
-
         private void Button1_EnabledChanged(Button sender, EventArgs e)
         {
             sender.ForeColor = sender.Enabled == false ? Color.Blue : Color.Red;
@@ -272,7 +259,7 @@ namespace Sudoku
             {
                 if (controller.game.originalNumbersArray != null)
                 {
-                    bool hasSaved = Enumerable.SequenceEqual(controller.game.numbersArray, controller.game.originalNumbersArray);
+                    bool hasSaved = Enumerable.SequenceEqual(controller.game.numbersArray, controller.game.lastSaveNumbersArray);
                     if (!hasSaved)
                     {
                         var confirmResult = MessageBox.Show("Are you sure you want to load a new file, you will lose your current progress", "Warning",
@@ -304,7 +291,7 @@ namespace Sudoku
 
         private void saveButton_click(object sender, EventArgs e)
         {
-            controller.game.ToCSV();
+            controller.game.SaveGame();
             MessageBox.Show("Game Saved");
         }
 
@@ -313,6 +300,27 @@ namespace Sudoku
             Color color = controller.game.IsPuzzleValid() ? Color.Green : Color.Red;
             Button btn = (Button)sender;
             btn.BackColor = color;
+        }
+
+        private void SudokuMaker_Click(object sender, EventArgs e)
+        {
+            SudokuMaker SM = new SudokuMaker(controller.game, this);
+            SM.Show();
+        }
+
+        private void ResetBtn_Click(object sender, EventArgs e)
+        {
+            controller.game.numbersArray = controller.game.originalNumbersArray;
+            foreach (Panel p in Controls["SudokuGame"].Controls)
+            {
+                foreach(Button cell in p.Controls)
+                {
+                    if (cell.Enabled)
+                    {
+                        cell.Text = "";
+                    }
+                }
+            }
         }
     }
 }
