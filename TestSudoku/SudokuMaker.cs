@@ -14,18 +14,15 @@ namespace Sudoku
     {
         Game g;
         SudokuForm p;
-        int[] gameGrid;
-        public SudokuMaker(Game game, SudokuForm parentForm)
+
+        public SudokuMaker()
         {
             InitializeComponent();
             g = new Game();
-            p = parentForm;
         }
 
         private void Export_Click(object sender, EventArgs e)
         {
-            // Displays a SaveFileDialog so the user can save the Image
-            // assigned to Button2.
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
                 Filter = "CSV|*.csv",
@@ -36,28 +33,29 @@ namespace Sudoku
             // If the file name is not an empty string open it for saving.
             if (saveFileDialog1.FileName != "")
             {
-                // Saves the Image via a FileStream created by the OpenFile method.
                 System.IO.FileStream fs =
                     (System.IO.FileStream)saveFileDialog1.OpenFile();
-                MessageBox.Show(fs.Name);
+                MessageBox.Show("Sudoku Game saved to: " + fs.Name);
                 fs.Close();
                 string gameSettings = g.WriteJsonSettings(GetSudokuSettings());
                 
-                string csvGame = g.ToCSVString(gameGrid);
+                string csvGame = g.ToCSVString(g.numbersArray);
                 g.ToCSV(fs.Name, gameSettings, csvGame, csvGame);
             }
         }
 
         private GameSettings GetSudokuSettings()
         {
-            GameSettings s = new GameSettings();
-            s.SquareWidth = (int)SquareWidth.Value;
-            s.SquareHeight = (int)SquareHeight.Value;
-            s.Highscore = 0;
-            s.TargetTime = (int)TargetTime.Value;
-            s.HintsUsed = 0;
-            s.TimeSpent = 0;
-            s.BaseScore = 100;
+            GameSettings s = new GameSettings
+            {
+                SquareWidth = (int)SquareWidth.Value,
+                SquareHeight = (int)SquareHeight.Value,
+                Highscore = 0,
+                TargetTime = (int)TargetTime.Value,
+                HintsUsed = 0,
+                TimeSpent = 0,
+                BaseScore = 100
+            };
             return s;
         }
 
@@ -68,13 +66,19 @@ namespace Sudoku
 
         private void GenerateBtn_Click(object sender, EventArgs e)
         {
+            Export.Enabled = true;
             ClearTemplate();
-            g.SetSettings(GetSudokuSettings(), false);
-            GameGrid GG = new GameGrid(g, this, 50);
-            TemplateArea.Controls.Add(GG.MakeSudoku());
-            TemplateArea.BackColor = Color.Red;
-            
+            DrawTemplate();
         }
 
+        private void DrawTemplate()
+        {
+            g.SetSettings(GetSudokuSettings(), false);
+            GameGrid GG = new GameGrid(g, this, 50);
+            Panel SudokuPanel = GG.MakeSudoku();
+            //Center add 10 px padding to top
+            SudokuPanel.Location = new Point((TemplateArea.Width - SudokuPanel.Width) / 2, 10);
+            TemplateArea.Controls.Add(SudokuPanel);
+        }
     }
 }

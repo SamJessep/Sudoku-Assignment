@@ -34,10 +34,10 @@
             this.SquareWidth = new System.Windows.Forms.NumericUpDown();
             this.SquareHeight = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.TemplateArea = new System.Windows.Forms.Panel();
             this.Other = new System.Windows.Forms.GroupBox();
             this.TimeLabel = new System.Windows.Forms.Label();
             this.TargetTime = new System.Windows.Forms.NumericUpDown();
+            this.TemplateArea = new System.Windows.Forms.Panel();
             this.Export = new System.Windows.Forms.Button();
             this.GenerateBtn = new System.Windows.Forms.Button();
             this.Size.SuspendLayout();
@@ -133,14 +133,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Game Settings";
             // 
-            // TemplateArea
-            // 
-            this.TemplateArea.BackColor = System.Drawing.Color.DarkGoldenrod;
-            this.TemplateArea.Location = new System.Drawing.Point(8, 75);
-            this.TemplateArea.Name = "TemplateArea";
-            this.TemplateArea.Size = new System.Drawing.Size(776, 314);
-            this.TemplateArea.TabIndex = 4;
-            // 
             // Other
             // 
             this.Other.Controls.Add(this.TimeLabel);
@@ -178,9 +170,19 @@
             0,
             0});
             // 
+            // TemplateArea
+            // 
+            this.TemplateArea.AutoScroll = true;
+            this.TemplateArea.BackColor = System.Drawing.Color.LightGoldenrodYellow;
+            this.TemplateArea.Location = new System.Drawing.Point(8, 75);
+            this.TemplateArea.Name = "TemplateArea";
+            this.TemplateArea.Size = new System.Drawing.Size(776, 314);
+            this.TemplateArea.TabIndex = 4;
+            // 
             // Export
             // 
             this.Export.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.Export.Enabled = false;
             this.Export.Location = new System.Drawing.Point(0, 427);
             this.Export.Name = "Export";
             this.Export.Size = new System.Drawing.Size(800, 23);
@@ -204,6 +206,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.LightGoldenrodYellow;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.TemplateArea);
