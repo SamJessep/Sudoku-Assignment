@@ -37,6 +37,13 @@ namespace Sudoku
             Panel GamePanel = new GameGrid(game, this, 50).MakeSudoku();
             GamePanel.Location = new Point((Width - GamePanel.Width) / 2, MenuPanel.Height);
             Controls.Add(GamePanel);
+            Timer t = new Timer
+            {
+                Interval = 1000,
+            };
+            t.Tick += UpdateTime;
+            t.Start();
+            controller.game.StartTimer();
         }
 
         private void setWindowSize(int w,int h)
@@ -172,6 +179,23 @@ namespace Sudoku
                     }
                 }
             }
+        }
+
+        private string GetTimeAsString(Game g)
+        {
+            int totalSeconds = g.timeTaken;
+            int sec = totalSeconds % 60;
+            int min = (int)Math.Floor(d: (decimal)totalSeconds / 60);
+            string secAsString = sec.ToString().Length == 1 ? "0" + sec : sec.ToString();
+            string minAsString = min.ToString().Length == 1 ? "0" + min : min.ToString();
+            string timeString = minAsString + ":" + secAsString;
+            return timeString;
+        }
+
+        private void UpdateTime(object sender, EventArgs e)
+        {
+            Label TimeLbl = (Label)Controls["MenuPanel"].Controls["CurrentTime"];
+            TimeLbl.Text = GetTimeAsString(controller.game);
         }
     }
 }

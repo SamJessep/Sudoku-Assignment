@@ -39,6 +39,7 @@ namespace Sudoku
             this.ResetBtn = new System.Windows.Forms.Button();
             this.SudokuMaker = new System.Windows.Forms.Button();
             this.Check = new System.Windows.Forms.Button();
+            this.CurrentTime = new System.Windows.Forms.Label();
             this.MenuPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,6 +88,7 @@ namespace Sudoku
             // MenuPanel
             // 
             this.MenuPanel.AutoSize = true;
+            this.MenuPanel.Controls.Add(this.CurrentTime);
             this.MenuPanel.Controls.Add(this.ResetBtn);
             this.MenuPanel.Controls.Add(this.SudokuMaker);
             this.MenuPanel.Controls.Add(this.Check);
@@ -153,6 +155,16 @@ namespace Sudoku
             this.Check.Visible = false;
             this.Check.Click += new System.EventHandler(this.checkBtnClicked);
             // 
+            // CurrentTime
+            // 
+            this.CurrentTime.AutoSize = true;
+            this.CurrentTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrentTime.Location = new System.Drawing.Point(595, 14);
+            this.CurrentTime.Name = "CurrentTime";
+            this.CurrentTime.Size = new System.Drawing.Size(80, 24);
+            this.CurrentTime.TabIndex = 7;
+            this.CurrentTime.Text = "00:00:00";
+            // 
             // SudokuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,6 +175,7 @@ namespace Sudoku
             this.Name = "SudokuForm";
             this.Text = "Sudoku";
             this.MenuPanel.ResumeLayout(false);
+            this.MenuPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -176,5 +189,6 @@ namespace Sudoku
         private Button SudokuMaker;
         private Button ResetBtn;
         private Button Check;
+        private Label CurrentTime;
     }
 }
