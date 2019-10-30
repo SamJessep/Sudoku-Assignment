@@ -283,12 +283,14 @@ namespace Sudoku
                     MakeSudoku(controller.game);
                     MenuPanel.Controls["SaveBtn"].Visible = true;
                     MenuPanel.Controls["Check"].Visible = true;
+                    MenuPanel.Controls["ResetBtn"].Visible = true;
                 }
                 else
                 {
                     MessageBox.Show("Game Load aborted");
                     MenuPanel.Controls["SaveBtn"].Visible = false;
                     MenuPanel.Controls["Check"].Visible = false;
+                    MenuPanel.Controls["ResetBtn"].Visible = false;
                 }
             }
         }
