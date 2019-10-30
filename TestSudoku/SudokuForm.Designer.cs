@@ -113,6 +113,7 @@ namespace Sudoku
             this.ResetBtn.Tag = "Load/Save";
             this.ResetBtn.Text = "Reset";
             this.ResetBtn.UseVisualStyleBackColor = false;
+            this.ResetBtn.Visible = false;
             this.ResetBtn.Click += new System.EventHandler(this.ResetBtn_Click);
             // 
             // SudokuMaker

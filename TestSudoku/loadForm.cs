@@ -38,7 +38,7 @@ namespace Sudoku
             P.Name = panelName;
             P.Size = s;
             P.Click += SelectGame;
-            P.MouseEnter += SudokuHover;
+            P.MouseEnter += SudokuGameHover;
             P.Location = new Point(x, y);
             return P;
         }
@@ -58,22 +58,20 @@ namespace Sudoku
                 row = g.GetRowByIndex(c);
                 OG = SForm.AddLabel(
                     "Original" + c,
-                    "Original",
                     g.originalNumbersArray[c] == 0 ? "" : g.originalNumbersArray[c].ToString(),
                     row,
                     col
                     );
                 GS = SForm.AddLabel(
                     "GameSave" + c,
-                    "GameSave",
                     g.numbersArray[c] == 0 ? "" : g.numbersArray[c].ToString(),
                     row,
                     col
                     );
-                OG.Click += labelClick;
-                GS.Click += labelClick;
-                OG.MouseEnter += labelHover;
-                GS.MouseEnter += labelHover;
+                OG.Click += SudokuCellLabel_Clicked;
+                GS.Click += SudokuCellLabel_Clicked;
+                OG.MouseEnter += SudokuCellLabel_Hover;
+                GS.MouseEnter += SudokuCellLabel_Hover;
                 GameSave.Controls.Add(GS);
                 Original.Controls.Add(OG);
             }
@@ -87,7 +85,7 @@ namespace Sudoku
             Close();
         }
 
-        private void SudokuHover(Object sender, EventArgs e)
+        private void SudokuGameHover(Object sender, EventArgs e)
         {
             Panel P = (Panel)sender;
             loadingGameSave = P.Name == "GameSave";
@@ -96,20 +94,20 @@ namespace Sudoku
             //P.BackColor = Color.Brown;
         }
 
-        private void labelHover(Object sender, EventArgs e)
+        private void SudokuCellLabel_Hover(Object sender, EventArgs e)
         {
             Label theLabel = (Label)sender;
             Panel Parent = (Panel)theLabel.Parent;
-            SudokuHover(Parent, EventArgs.Empty);
+            SudokuGameHover(Parent, EventArgs.Empty);
         }
 
-        private void labelClick(Object sender, EventArgs e)
+        private void SudokuCellLabel_Clicked(Object sender, EventArgs e)
         {
             Label theLabel = (Label)sender;
             Panel Parent = (Panel)theLabel.Parent;
             SelectGame(Parent, EventArgs.Empty);
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void CancelBtn_Clicked(object sender, EventArgs e)
         {
             Close();
         }
