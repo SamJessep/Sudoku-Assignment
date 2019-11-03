@@ -16,7 +16,6 @@ namespace Sudoku
     {
         private const int BoxWidth = 50;
         GameController controller;
-        private int SelectedVal;
         private int textFontSize = 20;
 
         public void SetController(GameController theController)
@@ -181,7 +180,7 @@ namespace Sudoku
             }
         }
 
-        private string GetTimeAsString(Game g)
+        public string GetTimeAsString(Game g)
         {
             int totalSeconds = g.timeTaken;
             int sec = totalSeconds % 60;
