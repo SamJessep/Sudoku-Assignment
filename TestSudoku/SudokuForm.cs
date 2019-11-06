@@ -1,34 +1,79 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Security;
 
 namespace Sudoku
 {
-    public partial class SudokuForm : Form
+    public partial class SudokuForm : Form, IView
     {
         private const int BoxWidth = 50;
         GameController controller;
         private int textFontSize = 20;
 
+        public SudokuForm()
+        {
+            InitializeComponent();
+        }
+
+        private void OpenBtn_Clicked(object sender, EventArgs e)
+        {
+            controller.SelectGame();
+        }
+
+        private void SaveBtn_Clicked(object sender, EventArgs e)
+        {
+            controller.SaveGame();
+        }
+
+        private void CheckBtn_Clicked(Object sender, EventArgs e)
+        {
+            Color color = controller.game.IsPuzzleValid() ? Color.Green : Color.Red;
+            Button btn = (Button)sender;
+            btn.BackColor = color;
+        }
+
+        private void EditorBtn_Clicked(object sender, EventArgs e)
+        {
+            SudokuMaker SM = new SudokuMaker();
+            SM.Show();
+        }
+
+        private void ResetBtn_Clicked(object sender, EventArgs e)
+        {
+            controller.ResetGame();
+        }
+
         public void SetController(GameController theController)
         {
             controller = theController;
         }
-        public SudokuForm()
+
+        public void Start()
         {
-            InitializeComponent();
-            AutoSize = true;
+            Application.EnableVisualStyles();
+            Application.Run(this);
         }
 
-        public void MakeSudoku(Game game)
+        public void Stop()
+        {
+            Close();
+        }
+
+        public void Show<T>(T Prompt)
+        {
+            MessageBox.Show(Prompt.ToString());
+        }
+
+        public bool GetBoolInput(string prompt)
+        {
+            var Result = MessageBox.Show("Are you sure you want to load a new file, you will lose your current progress", "Warning",
+                                            MessageBoxButtons.YesNo);
+            return Result == DialogResult.Yes;
+        }
+
+        public void DrawSudoku(Game game)
         {
             int H = 80 + BoxWidth * (game.gridHeight + 2);
             int W = 40 + BoxWidth * (game.gridWidth + 1);
@@ -36,50 +81,9 @@ namespace Sudoku
             Panel GamePanel = new GameGrid(game, this, 50).MakeSudoku();
             GamePanel.Location = new Point((Width - GamePanel.Width) / 2, MenuPanel.Height);
             Controls.Add(GamePanel);
-            Timer t = new Timer
-            {
-                Interval = 1000,
-            };
-            t.Tick += UpdateTime;
-            t.Start();
-            controller.game.StartTimer();
         }
 
-        private void setWindowSize(int w,int h)
-        {
-            Width = w;
-            Height = h;
-        }
-
-        public Label AddLabel(string name, string text, int row, int column)
-        {
-            int x = BoxWidth * column;
-            int y = BoxWidth * row;
-            int fontSize = text.ToCharArray().Length > 1 ? (int)(textFontSize * 0.75) : textFontSize;
-            Label l = new Label
-            {
-                Name = name + row + "_" + column,
-                Height = BoxWidth,
-                Width = BoxWidth,
-                Font = new Font("Arial", fontSize),
-                Text = text,
-                BorderStyle = BorderStyle.FixedSingle,
-                TextAlign = ContentAlignment.MiddleCenter,
-                Visible = true,
-                Location = new Point(x, y)
-            };
-            return l;
-        }
-
-        private void ClearGame()
-        {
-            if (Controls.ContainsKey("Sudoku")){
-                Controls["Sudoku"].Controls.Clear();
-                Controls.Remove(Controls["Sudoku"]);
-            }
-        }
-
-        private string GetFilePath()
+        public string GetFilePath()
         {
             OpenFileDialog theDialog = new OpenFileDialog();
             var filePath = "";
@@ -106,71 +110,19 @@ namespace Sudoku
             return filePath;
         }
 
-        private void Open_Click(object sender, EventArgs e)
+        public (bool, bool) ChooseGame()
         {
-            string path = GetFilePath();
-            //Load File for game preview
-            if(path != null)
-            {
-                if (controller.game.originalNumbersArray != null)
-                {
-                    bool hasSaved = Enumerable.SequenceEqual(controller.game.numbersArray, controller.game.lastSaveNumbersArray);
-                    if (!hasSaved)
-                    {
-                        var confirmResult = MessageBox.Show("Are you sure you want to load a new file, you will lose your current progress", "Warning",
-                                         MessageBoxButtons.YesNo);
-                        if (confirmResult == DialogResult.No)
-                        {
-                            return;
-                        }
-                    }
-                }
-                controller.game.FromCSV(path, true);
-                ClearGame();
-                loadForm f = new loadForm(this, controller.game);
-                if (f.ShowDialog() == DialogResult.OK)
-                {
-                    controller.game.FromCSV(path, f.loadingGameSave);
-                    MakeSudoku(controller.game);
-                    MenuPanel.Controls["SaveBtn"].Visible = true;
-                    MenuPanel.Controls["Check"].Visible = true;
-                    MenuPanel.Controls["ResetBtn"].Visible = true;
-                }
-                else
-                {
-                    MessageBox.Show("Game Load aborted");
-                    MenuPanel.Controls["SaveBtn"].Visible = false;
-                    MenuPanel.Controls["Check"].Visible = false;
-                    MenuPanel.Controls["ResetBtn"].Visible = false;
-                }
-            }
+            loadForm f = new loadForm(this, controller.game);
+            bool gameWasChosen = f.ShowDialog() == DialogResult.OK;
+            bool loadingGameSave = f.loadingGameSave;
+            return (gameWasChosen, loadingGameSave);
         }
 
-        private void saveButton_click(object sender, EventArgs e)
+        public void ResetGame()
         {
-            controller.game.SaveGame();
-            MessageBox.Show("Game Saved");
-        }
-
-        private void checkBtnClicked(Object sender, EventArgs e)
-        {
-            Color color = controller.game.IsPuzzleValid() ? Color.Green : Color.Red;
-            Button btn = (Button)sender;
-            btn.BackColor = color;
-        }
-
-        private void SudokuMaker_Click(object sender, EventArgs e)
-        {
-            SudokuMaker SM = new SudokuMaker();
-            SM.Show();
-        }
-
-        private void ResetBtn_Click(object sender, EventArgs e)
-        {
-            controller.game.numbersArray = controller.game.originalNumbersArray;
             foreach (Panel p in Controls["Sudoku"].Controls["SudokuGame"].Controls)
             {
-                foreach(Button cell in p.Controls)
+                foreach (Button cell in p.Controls)
                 {
                     if (cell.Enabled)
                     {
@@ -180,21 +132,55 @@ namespace Sudoku
             }
         }
 
-        public string GetTimeAsString(Game g)
-        {
-            int totalSeconds = g.timeTaken;
-            int sec = totalSeconds % 60;
-            int min = (int)Math.Floor(d: (decimal)totalSeconds / 60);
-            string secAsString = sec.ToString().Length == 1 ? "0" + sec : sec.ToString();
-            string minAsString = min.ToString().Length == 1 ? "0" + min : min.ToString();
-            string timeString = minAsString + ":" + secAsString;
-            return timeString;
-        }
-
-        private void UpdateTime(object sender, EventArgs e)
+        public void UpdateTime()
         {
             Label TimeLbl = (Label)Controls["MenuPanel"].Controls["CurrentTime"];
-            TimeLbl.Text = GetTimeAsString(controller.game);
+            TimeLbl.Text = controller.GetTimeAsString();
         }
+
+
+
+        public void ToggleGameMenu(bool visible)
+        {
+            MenuPanel.Controls["SaveBtn"].Visible = visible;
+            MenuPanel.Controls["Check"].Visible = visible;
+            MenuPanel.Controls["ResetBtn"].Visible = visible;
+        }
+
+        private void setWindowSize(int w, int h)
+        {
+            Width = w;
+            Height = h;
+        }
+
+        public void ClearGameScreen()
+        {
+            if (Controls.ContainsKey("Sudoku"))
+            {
+                Controls["Sudoku"].Controls.Clear();
+                Controls.Remove(Controls["Sudoku"]);
+            }
+        }
+
+        public Label AddLabel(string name, string text, int row, int column)
+        {
+            int x = BoxWidth * column;
+            int y = BoxWidth * row;
+            int fontSize = text.ToCharArray().Length > 1 ? (int)(textFontSize * 0.75) : textFontSize;
+            Label l = new Label
+            {
+                Name = name + row + "_" + column,
+                Height = BoxWidth,
+                Width = BoxWidth,
+                Font = new Font("Arial", fontSize),
+                Text = text,
+                BorderStyle = BorderStyle.FixedSingle,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Visible = true,
+                Location = new Point(x, y)
+            };
+            return l;
+        }
+        
     }
 }

@@ -14,7 +14,7 @@ namespace Sudoku
         public int targetTime;
         public int timeTaken;
         private int baseScore;
-        private static Timer aTimer;
+        public Timer timer;
 
 
         public int GetScore()
@@ -41,21 +41,21 @@ namespace Sudoku
         public void StartTimer()
         {
             // Create a timer with a one second interval.
-            aTimer = new Timer(1000);
+            timer = new Timer(1000);
             // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+            timer.Elapsed += Count;
+            timer.AutoReset = true;
+            timer.Enabled = true;
         }
 
         public void StopTimer()
         {
-            aTimer.Stop();
-            aTimer.Dispose();
+            timer.Stop();
+            timer.Dispose();
         }
 
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private void Count(Object source, ElapsedEventArgs e)
         {
             timeTaken++;
         }

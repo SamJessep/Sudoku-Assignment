@@ -36,10 +36,10 @@ namespace Sudoku
             this.Open = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.MenuPanel = new System.Windows.Forms.Panel();
+            this.CurrentTime = new System.Windows.Forms.Label();
             this.ResetBtn = new System.Windows.Forms.Button();
             this.SudokuMaker = new System.Windows.Forms.Button();
             this.Check = new System.Windows.Forms.Button();
-            this.CurrentTime = new System.Windows.Forms.Label();
             this.MenuPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +64,7 @@ namespace Sudoku
             this.Open.Tag = "Load/Save";
             this.Open.Text = "Load";
             this.Open.UseVisualStyleBackColor = false;
-            this.Open.Click += new System.EventHandler(this.Open_Click);
+            this.Open.Click += new System.EventHandler(this.OpenBtn_Clicked);
             // 
             // SaveBtn
             // 
@@ -83,7 +83,7 @@ namespace Sudoku
             this.SaveBtn.Text = "Save";
             this.SaveBtn.UseVisualStyleBackColor = false;
             this.SaveBtn.Visible = false;
-            this.SaveBtn.Click += new System.EventHandler(this.saveButton_click);
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Clicked);
             // 
             // MenuPanel
             // 
@@ -98,6 +98,16 @@ namespace Sudoku
             this.MenuPanel.Name = "MenuPanel";
             this.MenuPanel.Size = new System.Drawing.Size(788, 51);
             this.MenuPanel.TabIndex = 4;
+            // 
+            // CurrentTime
+            // 
+            this.CurrentTime.AutoSize = true;
+            this.CurrentTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrentTime.Location = new System.Drawing.Point(595, 14);
+            this.CurrentTime.Name = "CurrentTime";
+            this.CurrentTime.Size = new System.Drawing.Size(80, 24);
+            this.CurrentTime.TabIndex = 7;
+            this.CurrentTime.Text = "00:00:00";
             // 
             // ResetBtn
             // 
@@ -116,7 +126,7 @@ namespace Sudoku
             this.ResetBtn.Text = "Reset";
             this.ResetBtn.UseVisualStyleBackColor = false;
             this.ResetBtn.Visible = false;
-            this.ResetBtn.Click += new System.EventHandler(this.ResetBtn_Click);
+            this.ResetBtn.Click += new System.EventHandler(this.ResetBtn_Clicked);
             // 
             // SudokuMaker
             // 
@@ -134,7 +144,7 @@ namespace Sudoku
             this.SudokuMaker.Tag = "Load/Save";
             this.SudokuMaker.Text = "Sudoku Maker";
             this.SudokuMaker.UseVisualStyleBackColor = false;
-            this.SudokuMaker.Click += new System.EventHandler(this.SudokuMaker_Click);
+            this.SudokuMaker.Click += new System.EventHandler(this.EditorBtn_Clicked);
             // 
             // Check
             // 
@@ -153,22 +163,13 @@ namespace Sudoku
             this.Check.Text = "Check";
             this.Check.UseVisualStyleBackColor = false;
             this.Check.Visible = false;
-            this.Check.Click += new System.EventHandler(this.checkBtnClicked);
-            // 
-            // CurrentTime
-            // 
-            this.CurrentTime.AutoSize = true;
-            this.CurrentTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CurrentTime.Location = new System.Drawing.Point(595, 14);
-            this.CurrentTime.Name = "CurrentTime";
-            this.CurrentTime.Size = new System.Drawing.Size(80, 24);
-            this.CurrentTime.TabIndex = 7;
-            this.CurrentTime.Text = "00:00:00";
+            this.Check.Click += new System.EventHandler(this.CheckBtn_Clicked);
             // 
             // SudokuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.LightGoldenrodYellow;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.MenuPanel);
