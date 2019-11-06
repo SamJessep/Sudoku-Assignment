@@ -6,7 +6,7 @@ using System.Security;
 
 namespace Sudoku
 {
-    public partial class SudokuForm : Form, IView
+    public partial class SudokuForm : Form, IView, IGameView
     {
         private const int BoxWidth = 50;
         GameController controller;
@@ -36,8 +36,7 @@ namespace Sudoku
 
         private void EditorBtn_Clicked(object sender, EventArgs e)
         {
-            SudokuMaker SM = new SudokuMaker();
-            SM.Show();
+            controller.StartEditor();
         }
 
         private void ResetBtn_Clicked(object sender, EventArgs e)
@@ -66,9 +65,9 @@ namespace Sudoku
             MessageBox.Show(Prompt.ToString());
         }
 
-        public bool GetBoolInput(string prompt)
+        public bool GetBoolInput(string prompt, string title = "Confirmation")
         {
-            var Result = MessageBox.Show("Are you sure you want to load a new file, you will lose your current progress", "Warning",
+            var Result = MessageBox.Show(prompt, title,
                                             MessageBoxButtons.YesNo);
             return Result == DialogResult.Yes;
         }

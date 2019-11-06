@@ -34,11 +34,6 @@ namespace Sudoku
             throw new NotImplementedException();
         }
 
-        public bool GetBoolInput(string prompt)
-        {
-            throw new NotImplementedException();
-        }
-
         public string GetFilePath()
         {
             throw new NotImplementedException();
@@ -60,6 +55,11 @@ namespace Sudoku
         }
 
         public void UpdateTime()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetBoolInput(string prompt, string title)
         {
             throw new NotImplementedException();
         }

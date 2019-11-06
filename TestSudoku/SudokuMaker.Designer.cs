@@ -183,9 +183,9 @@
             // 
             this.Export.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Export.Enabled = false;
-            this.Export.Location = new System.Drawing.Point(0, 427);
+            this.Export.Location = new System.Drawing.Point(0, 412);
             this.Export.Name = "Export";
-            this.Export.Size = new System.Drawing.Size(800, 23);
+            this.Export.Size = new System.Drawing.Size(804, 23);
             this.Export.TabIndex = 2;
             this.Export.Text = "Export";
             this.Export.UseVisualStyleBackColor = true;
@@ -194,9 +194,9 @@
             // GenerateBtn
             // 
             this.GenerateBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.GenerateBtn.Location = new System.Drawing.Point(0, 404);
+            this.GenerateBtn.Location = new System.Drawing.Point(0, 389);
             this.GenerateBtn.Name = "GenerateBtn";
-            this.GenerateBtn.Size = new System.Drawing.Size(800, 23);
+            this.GenerateBtn.Size = new System.Drawing.Size(804, 23);
             this.GenerateBtn.TabIndex = 3;
             this.GenerateBtn.Text = "Generate Template";
             this.GenerateBtn.UseVisualStyleBackColor = true;

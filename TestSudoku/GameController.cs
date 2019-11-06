@@ -23,6 +23,11 @@ namespace Sudoku
             view.Start();
         }
 
+        public void StartEditor()
+        {
+            new EditorController(new SudokuMaker()).StartEditor();
+        }
+
         public void SelectGame()
         {
             string path = view.GetFilePath();
@@ -34,7 +39,7 @@ namespace Sudoku
                     bool hasSaved = Enumerable.SequenceEqual(game.numbersArray, game.lastSaveNumbersArray);
                     if (!hasSaved)
                     {
-                        var UserWantsToAbort = view.GetBoolInput("Are you sure you want to load a new file, you will lose your current progress");
+                        var UserWantsToAbort = !view.GetBoolInput("Are you sure you want to load a new file, you will lose your current progress");
                         if (UserWantsToAbort)
                         {
                             return;

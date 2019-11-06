@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Sudoku
+{
+    interface IGameView
+    {
+        void DrawSudoku(Game game);
+        string GetFilePath();
+        (bool a, bool b) ChooseGame();
+        void ResetGame();
+        void UpdateTime();
+    }
+}

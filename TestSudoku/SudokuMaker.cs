@@ -10,10 +10,11 @@ using System.Windows.Forms;
 
 namespace Sudoku
 {
-    public partial class SudokuMaker : Form
+    public partial class SudokuMaker : Form, IEditor
     {
         Game g;
         SudokuForm p;
+        EditorController controller;
 
         public SudokuMaker()
         {
@@ -21,36 +22,19 @@ namespace Sudoku
             g = new Game();
         }
 
+        public void SetController(EditorController c)
+        {
+            controller = c;
+        }
+
+        private void GenerateBtn_Click(object sender, EventArgs e)
+        {
+            controller.MakeGameTemplate();
+        }
+
         private void Export_Click(object sender, EventArgs e)
         {
-            if (!g.IsPuzzleValidForSaving())
-            {
-                var confirmResult = MessageBox.Show("Current sudoku is invalid, are you sure you want to save", "Warning",
-                 MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.No)
-                {
-                    return;
-                }
-            }
-                SaveFileDialog saveFileDialog1 = new SaveFileDialog
-                {
-                    Filter = "CSV|*.csv",
-                    Title = "Save the sudoku game file"
-                };
-                saveFileDialog1.ShowDialog();
-
-                // If the file name is not an empty string open it for saving.
-                if (saveFileDialog1.FileName != "")
-                {
-                    System.IO.FileStream fs =
-                        (System.IO.FileStream)saveFileDialog1.OpenFile();
-                    MessageBox.Show("Sudoku Game saved to: " + fs.Name);
-                    fs.Close();
-                    string gameSettings = g.WriteJsonSettings(GetSudokuSettings());
-
-                    string csvGame = g.ToCSVString(g.numbersArray);
-                    g.ToCSV(fs.Name, gameSettings, csvGame, csvGame);
-                }
+            controller.ExportSudoku(g);
         }
 
         private GameSettings GetSudokuSettings()
@@ -68,19 +52,12 @@ namespace Sudoku
             return s;
         }
 
-        private void ClearTemplate()
+        public void ClearTemplate()
         {
             TemplateArea.Controls.Clear();
         }
 
-        private void GenerateBtn_Click(object sender, EventArgs e)
-        {
-            Export.Enabled = true;
-            ClearTemplate();
-            DrawTemplate();
-        }
-
-        private void DrawTemplate()
+        public void DrawTemplate()
         {
             g.SetSettings(GetSudokuSettings(), false);
             GameGrid GG = new GameGrid(g, this, 50);
@@ -89,5 +66,6 @@ namespace Sudoku
             SudokuPanel.Location = new Point((TemplateArea.Width - SudokuPanel.Width) / 2, 10);
             TemplateArea.Controls.Add(SudokuPanel);
         }
+
     }
 }
