@@ -51,62 +51,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleView.cs" />
-    <Compile Include="Editor.cs" />
-    <Compile Include="EditorController.cs" />
-    <Compile Include="FormView.cs" />
-    <Compile Include="GameGrid.cs" />
-    <Compile Include="IEditor.cs" />
-    <Compile Include="IGameView.cs" />
-    <Compile Include="LoadGameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LoadGameForm.Designer.cs">
-      <DependentUpon>LoadGameForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SudokuGameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SudokuGameForm.Designer.cs">
-      <DependentUpon>SudokuGameForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Game.cs" />
-    <Compile Include="GameController.cs" />
-    <Compile Include="GameSettings.cs" />
-    <Compile Include="Get.cs" />
-    <Compile Include="Hint.cs" />
-    <Compile Include="IGame.cs" />
-    <Compile Include="IGet.cs" />
-    <Compile Include="ReadWriteToFile.cs" />
-    <Compile Include="ISerialize.cs" />
-    <Compile Include="ISet.cs" />
-    <Compile Include="IView.cs" />
+    <Compile Include="Controllers\EditorController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Views\GameGrid.cs" />
+    <Compile Include="Models\GameSettings.cs" />
+    <Compile Include="Interfaces\IEditor.cs" />
+    <Compile Include="Interfaces\IGame.cs" />
+    <Compile Include="Interfaces\IGameView.cs" />
+    <Compile Include="Interfaces\IGet.cs" />
+    <Compile Include="Interfaces\ISerialize.cs" />
+    <Compile Include="Interfaces\ISet.cs" />
+    <Compile Include="Interfaces\IView.cs" />
+    <Compile Include="Models\Editor.cs" />
+    <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\Get.cs" />
+    <Compile Include="Models\Hint.cs" />
+    <Compile Include="Models\ReadWriteToFile.cs" />
+    <Compile Include="Models\Scoring.cs" />
+    <Compile Include="Models\Set.cs" />
+    <Compile Include="Models\Validator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scoring.cs" />
-    <Compile Include="Set.cs" />
-    <Compile Include="EditorForm.cs">
+    <Compile Include="Views\ConsoleView.cs" />
+    <Compile Include="Views\EditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditorForm.Designer.cs">
+    <Compile Include="Views\EditorForm.Designer.cs">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Validator.cs" />
+    <Compile Include="Views\FormView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LoadGameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LoadGameForm.Designer.cs">
+      <DependentUpon>LoadGameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SudokuGameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SudokuGameForm.Designer.cs">
+      <DependentUpon>SudokuGameForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="DesignClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LoadGameForm.resx">
+    <EmbeddedResource Include="Views\EditorForm.resx">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LoadGameForm.resx">
       <DependentUpon>LoadGameForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SudokuGameForm.resx">
+    <EmbeddedResource Include="Views\SudokuGameForm.resx">
       <DependentUpon>SudokuGameForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditorForm.resx">
-      <DependentUpon>EditorForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
