@@ -8,10 +8,10 @@ namespace Sudoku
 {
     public class GameController
     {
-        protected SudokuForm view;
+        protected SudokuGameForm view;
         public Game game;
 
-        public GameController(SudokuForm theView, Game theGame)
+        public GameController(SudokuGameForm theView, Game theGame)
         {
             view = theView;
             game = theGame;
@@ -25,7 +25,7 @@ namespace Sudoku
 
         public void StartEditor()
         {
-            new EditorController(new SudokuMaker()).StartEditor();
+            new EditorController(new EditorForm()).StartEditor();
         }
 
         public void SelectGame()

@@ -8,7 +8,12 @@ namespace Sudoku
 {
     interface IEditor
     {
+        int getSquareWidth();
+        int getSquareHeight();
+        int getTargetTime();
         void ClearTemplate();
-        void DrawTemplate();
+        void DrawTemplateComponent(Game g);
+        string GetSaveFilePath();
+
     }
 }

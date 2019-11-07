@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Sudoku
 {
-    partial class SudokuForm
+    partial class SudokuGameForm
     {
         /// <summary>
         /// Required designer variable.

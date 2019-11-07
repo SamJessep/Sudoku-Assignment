@@ -13,7 +13,7 @@ namespace Sudoku
         static void Main(string[] args)
         {
             Application.SetCompatibleTextRenderingDefault(false);
-            new GameController(new SudokuForm(), new Game()).StartApp();
+            new GameController(new SudokuGameForm(), new Game()).StartApp();
         }
     }
 }

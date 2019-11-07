@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace Sudoku
 {
-    public partial class loadForm : Form
+    public partial class LoadGameForm : Form
     {
         private const int boxWidth = 50;
         public bool loadingGameSave;
-        public loadForm(SudokuForm SForm, Game g)
+        public LoadGameForm(SudokuGameForm SForm, Game g)
         {
             InitializeComponent();
             DrawGames(SForm, g);
@@ -43,7 +43,7 @@ namespace Sudoku
             return P;
         }
 
-        private void DrawGames(SudokuForm SForm, Game g)
+        private void DrawGames(SudokuGameForm SForm, Game g)
         {
             Font LabelFont = new Font("Segoe UI Symbol", 12);
             Size s = new Size(g.gridWidth * boxWidth, g.gridWidth * boxWidth + boxWidth);

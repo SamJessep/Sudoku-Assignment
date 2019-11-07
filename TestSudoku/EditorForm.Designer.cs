@@ -1,6 +1,6 @@
 ﻿namespace Sudoku
 {
-    partial class SudokuMaker
+    partial class EditorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -183,9 +183,9 @@
             // 
             this.Export.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Export.Enabled = false;
-            this.Export.Location = new System.Drawing.Point(0, 412);
+            this.Export.Location = new System.Drawing.Point(0, 427);
             this.Export.Name = "Export";
-            this.Export.Size = new System.Drawing.Size(804, 23);
+            this.Export.Size = new System.Drawing.Size(800, 23);
             this.Export.TabIndex = 2;
             this.Export.Text = "Export";
             this.Export.UseVisualStyleBackColor = true;
@@ -194,15 +194,15 @@
             // GenerateBtn
             // 
             this.GenerateBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.GenerateBtn.Location = new System.Drawing.Point(0, 389);
+            this.GenerateBtn.Location = new System.Drawing.Point(0, 404);
             this.GenerateBtn.Name = "GenerateBtn";
-            this.GenerateBtn.Size = new System.Drawing.Size(804, 23);
+            this.GenerateBtn.Size = new System.Drawing.Size(800, 23);
             this.GenerateBtn.TabIndex = 3;
             this.GenerateBtn.Text = "Generate Template";
             this.GenerateBtn.UseVisualStyleBackColor = true;
             this.GenerateBtn.Click += new System.EventHandler(this.GenerateBtn_Click);
             // 
-            // SudokuMaker
+            // EditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -214,7 +214,7 @@
             this.Controls.Add(this.Export);
             this.Controls.Add(this.Size);
             this.Controls.Add(this.groupBox1);
-            this.Name = "SudokuMaker";
+            this.Name = "EditorForm";
             this.Text = "SudokuMaker";
             this.Size.ResumeLayout(false);
             this.Size.PerformLayout();

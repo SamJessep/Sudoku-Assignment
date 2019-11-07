@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Sudoku
 {
-    class FormView : IView
+    public class FormView : Form, IView
     {
         public bool GetBoolInput(string prompt, string title = "Confirmation")
         {

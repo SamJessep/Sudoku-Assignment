@@ -58,17 +58,17 @@
     <Compile Include="GameGrid.cs" />
     <Compile Include="IEditor.cs" />
     <Compile Include="IGameView.cs" />
-    <Compile Include="loadForm.cs">
+    <Compile Include="LoadGameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="loadForm.Designer.cs">
-      <DependentUpon>loadForm.cs</DependentUpon>
+    <Compile Include="LoadGameForm.Designer.cs">
+      <DependentUpon>LoadGameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SudokuForm.cs">
+    <Compile Include="SudokuGameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SudokuForm.Designer.cs">
-      <DependentUpon>SudokuForm.cs</DependentUpon>
+    <Compile Include="SudokuGameForm.Designer.cs">
+      <DependentUpon>SudokuGameForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="GameController.cs" />
@@ -85,11 +85,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scoring.cs" />
     <Compile Include="Set.cs" />
-    <Compile Include="SudokuMaker.cs">
+    <Compile Include="EditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SudokuMaker.Designer.cs">
-      <DependentUpon>SudokuMaker.cs</DependentUpon>
+    <Compile Include="EditorForm.Designer.cs">
+      <DependentUpon>EditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Validator.cs" />
   </ItemGroup>
@@ -99,14 +99,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="loadForm.resx">
-      <DependentUpon>loadForm.cs</DependentUpon>
+    <EmbeddedResource Include="LoadGameForm.resx">
+      <DependentUpon>LoadGameForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SudokuForm.resx">
-      <DependentUpon>SudokuForm.cs</DependentUpon>
+    <EmbeddedResource Include="SudokuGameForm.resx">
+      <DependentUpon>SudokuGameForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SudokuMaker.resx">
-      <DependentUpon>SudokuMaker.cs</DependentUpon>
+    <EmbeddedResource Include="EditorForm.resx">
+      <DependentUpon>EditorForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

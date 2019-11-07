@@ -6,13 +6,13 @@ using System.Security;
 
 namespace Sudoku
 {
-    public partial class SudokuForm : Form, IView, IGameView
+    public partial class SudokuGameForm : FormView, IGameView
     {
         private const int BoxWidth = 50;
         GameController controller;
         private int textFontSize = 20;
 
-        public SudokuForm()
+        public SudokuGameForm()
         {
             InitializeComponent();
         }
@@ -60,18 +60,6 @@ namespace Sudoku
             Close();
         }
 
-        public void Show<T>(T Prompt)
-        {
-            MessageBox.Show(Prompt.ToString());
-        }
-
-        public bool GetBoolInput(string prompt, string title = "Confirmation")
-        {
-            var Result = MessageBox.Show(prompt, title,
-                                            MessageBoxButtons.YesNo);
-            return Result == DialogResult.Yes;
-        }
-
         public void DrawSudoku(Game game)
         {
             int H = 80 + BoxWidth * (game.gridHeight + 2);
@@ -111,7 +99,7 @@ namespace Sudoku
 
         public (bool, bool) ChooseGame()
         {
-            loadForm f = new loadForm(this, controller.game);
+            LoadGameForm f = new LoadGameForm(this, controller.game);
             bool gameWasChosen = f.ShowDialog() == DialogResult.OK;
             bool loadingGameSave = f.loadingGameSave;
             return (gameWasChosen, loadingGameSave);

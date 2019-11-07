@@ -1,12 +1,5 @@
-{
-	"TargetTime": 200,
-	"TimeSpent": 500000,
-	"HintsUsed": 2,
-	"Highscore": 2,
-	"SquareWidth": 2,
-	"SquareHeight": 3,
-	"BaseScore": 100
-}*7,3,5,6,1,4
+{"BaseScore":100,"Highscore":2,"HintsUsed":0,"SquareHeight":3,"SquareWidth":2,"TargetTime":200,"TimeSpent":0}
+*7,3,5,6,1,4
 8,4,2,9,7,3
 9,6,1,2,8,5
 2,8,6,3,4,9
