@@ -37,9 +37,10 @@
             this.Other = new System.Windows.Forms.GroupBox();
             this.TimeLabel = new System.Windows.Forms.Label();
             this.TargetTime = new System.Windows.Forms.NumericUpDown();
-            this.TemplateArea = new System.Windows.Forms.Panel();
             this.Export = new System.Windows.Forms.Button();
             this.GenerateBtn = new System.Windows.Forms.Button();
+            this.TemplateArea = new System.Windows.Forms.Panel();
+            this.LoadFile = new System.Windows.Forms.Button();
             this.Size.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SquareWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SquareHeight)).BeginInit();
@@ -126,9 +127,10 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.Other);
-            this.groupBox1.Location = new System.Drawing.Point(2, 0);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(802, 78);
+            this.groupBox1.Size = new System.Drawing.Size(813, 78);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Game Settings";
@@ -170,22 +172,13 @@
             0,
             0});
             // 
-            // TemplateArea
-            // 
-            this.TemplateArea.AutoScroll = true;
-            this.TemplateArea.BackColor = System.Drawing.Color.LightGoldenrodYellow;
-            this.TemplateArea.Location = new System.Drawing.Point(8, 75);
-            this.TemplateArea.Name = "TemplateArea";
-            this.TemplateArea.Size = new System.Drawing.Size(776, 314);
-            this.TemplateArea.TabIndex = 4;
-            // 
             // Export
             // 
             this.Export.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Export.Enabled = false;
-            this.Export.Location = new System.Drawing.Point(0, 427);
+            this.Export.Location = new System.Drawing.Point(0, 590);
             this.Export.Name = "Export";
-            this.Export.Size = new System.Drawing.Size(800, 23);
+            this.Export.Size = new System.Drawing.Size(813, 23);
             this.Export.TabIndex = 2;
             this.Export.Text = "Export";
             this.Export.UseVisualStyleBackColor = true;
@@ -194,21 +187,45 @@
             // GenerateBtn
             // 
             this.GenerateBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.GenerateBtn.Location = new System.Drawing.Point(0, 404);
+            this.GenerateBtn.Location = new System.Drawing.Point(0, 567);
             this.GenerateBtn.Name = "GenerateBtn";
-            this.GenerateBtn.Size = new System.Drawing.Size(800, 23);
+            this.GenerateBtn.Size = new System.Drawing.Size(813, 23);
             this.GenerateBtn.TabIndex = 3;
             this.GenerateBtn.Text = "Generate Template";
             this.GenerateBtn.UseVisualStyleBackColor = true;
             this.GenerateBtn.Click += new System.EventHandler(this.GenerateBtn_Click);
+            // 
+            // TemplateArea
+            // 
+            this.TemplateArea.AutoScroll = true;
+            this.TemplateArea.AutoSize = true;
+            this.TemplateArea.BackColor = System.Drawing.Color.LightGoldenrodYellow;
+            this.TemplateArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TemplateArea.Location = new System.Drawing.Point(0, 78);
+            this.TemplateArea.Name = "TemplateArea";
+            this.TemplateArea.Size = new System.Drawing.Size(813, 489);
+            this.TemplateArea.TabIndex = 5;
+            // 
+            // LoadFile
+            // 
+            this.LoadFile.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.LoadFile.Location = new System.Drawing.Point(0, 544);
+            this.LoadFile.Name = "LoadFile";
+            this.LoadFile.Size = new System.Drawing.Size(813, 23);
+            this.LoadFile.TabIndex = 6;
+            this.LoadFile.Text = "Load Template";
+            this.LoadFile.UseVisualStyleBackColor = true;
+            this.LoadFile.Click += new System.EventHandler(this.LoadFile_Click);
             // 
             // EditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.LightGoldenrodYellow;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(813, 613);
+            this.Controls.Add(this.LoadFile);
             this.Controls.Add(this.TemplateArea);
             this.Controls.Add(this.GenerateBtn);
             this.Controls.Add(this.Export);
@@ -225,6 +242,7 @@
             this.Other.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TargetTime)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -242,5 +260,6 @@
         private System.Windows.Forms.Button Export;
         private System.Windows.Forms.Button GenerateBtn;
         private System.Windows.Forms.Panel TemplateArea;
+        private System.Windows.Forms.Button LoadFile;
     }
 }

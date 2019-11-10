@@ -45,6 +45,7 @@ namespace Sudoku
                             return;
                         }
                     }
+                    StopTimer();
                 }
                 view.ClearGameScreen();
                 LoadGame(path);
@@ -61,7 +62,7 @@ namespace Sudoku
             {
                 game.FromCSV(gameFilePath, isLoadingSave);
                 view.DrawSudoku(game);
-                //StartGameTimer();
+                StartGameTimer();
             }
             else
             {
@@ -79,6 +80,16 @@ namespace Sudoku
         private void UpdateViewTimer(object sender, EventArgs e)
         {
             view.UpdateTime();
+        }
+
+        public void StopTimer()
+        {
+            game.StopTimer();
+        }
+
+        public void GameWon()
+        {
+            view.Show("Game Completed in: " + game.timeTaken + " seconds");
         }
 
         public void SaveGame()

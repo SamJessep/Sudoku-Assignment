@@ -15,6 +15,7 @@ namespace Sudoku
         public SudokuGameForm()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void OpenBtn_Clicked(object sender, EventArgs e)
@@ -65,36 +66,9 @@ namespace Sudoku
             int H = 80 + BoxWidth * (game.gridHeight + 2);
             int W = 40 + BoxWidth * (game.gridWidth + 1);
             setWindowSize(W, H);
-            Panel GamePanel = new GameGrid(game, this, 50).MakeSudoku();
+            Panel GamePanel = new GameGrid(game, 50, controller).MakeSudoku();
             GamePanel.Location = new Point((Width - GamePanel.Width) / 2, MenuPanel.Height);
             Controls.Add(GamePanel);
-        }
-
-        public string GetFilePath()
-        {
-            OpenFileDialog theDialog = new OpenFileDialog();
-            var filePath = "";
-            theDialog.Title = "Select Sudoku CSV file";
-            theDialog.Filter = "CSV files|*.csv";
-            theDialog.InitialDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\GameSaves")); ;
-            if (theDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    filePath = theDialog.FileName;
-                }
-                catch (SecurityException ex)
-                {
-                    MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
-                    $"Details:\n\n{ex.StackTrace}");
-                    filePath = null;
-                }
-            }
-            else
-            {
-                filePath = null;
-            }
-            return filePath;
         }
 
         public (bool, bool) ChooseGame()

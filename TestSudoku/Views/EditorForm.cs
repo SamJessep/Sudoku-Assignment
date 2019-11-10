@@ -47,12 +47,13 @@ namespace Sudoku
 
         public void DrawTemplateComponent(Game game)
         {
-            GameGrid GG = new GameGrid(game, this, 50);
+            GameGrid GG = new GameGrid(game, 50, controller);
             Panel SudokuPanel = GG.MakeSudoku();
             //Center add 10 px padding to top
             SudokuPanel.Location = new Point((TemplateArea.Width - SudokuPanel.Width) / 2, 10);
             TemplateArea.Controls.Add(SudokuPanel);
         }
+
 
         public string GetSaveFilePath()
         {
@@ -79,6 +80,11 @@ namespace Sudoku
         public void ToggleExportBtn(bool enabled)
         {
             Export.Enabled = enabled;
+        }
+
+        private void LoadFile_Click(object sender, EventArgs e)
+        {
+            controller.LoadGameFile();
         }
     }
 }

@@ -39,9 +39,13 @@ namespace Sudoku
             SaveFile(filePath, gameSettings, csvGame);
         }
 
-        public void MakeGameTemplate()
+        public void MakeGameTemplate(Game gameTemplate)
         {
-            game = new Game();
+            game = gameTemplate;
+            AddTemplate();
+        }
+        public void AddTemplate()
+        {
             editor.ToggleExportBtn(true);
             editor.ClearTemplate();
             game.SetSettings(GetGameSettings(), false);
@@ -69,6 +73,14 @@ namespace Sudoku
             {
                 game.ToCSV(path, settings, gameCsv, gameCsv);
             }
+        }
+
+        public void LoadGameFile()
+        {
+            game = new Game();
+            string path = editor.GetFilePath();
+            game.FromCSV(path, false);
+            MakeGameTemplate();
         }
 
     }

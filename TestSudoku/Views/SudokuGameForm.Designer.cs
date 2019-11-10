@@ -105,9 +105,9 @@ namespace Sudoku
             this.CurrentTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrentTime.Location = new System.Drawing.Point(595, 14);
             this.CurrentTime.Name = "CurrentTime";
-            this.CurrentTime.Size = new System.Drawing.Size(80, 24);
+            this.CurrentTime.Size = new System.Drawing.Size(55, 24);
             this.CurrentTime.TabIndex = 7;
-            this.CurrentTime.Text = "00:00:00";
+            this.CurrentTime.Text = "00:00";
             // 
             // ResetBtn
             // 
@@ -165,7 +165,7 @@ namespace Sudoku
             this.Check.Visible = false;
             this.Check.Click += new System.EventHandler(this.CheckBtn_Clicked);
             // 
-            // SudokuForm
+            // SudokuGameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -173,7 +173,7 @@ namespace Sudoku
             this.BackColor = System.Drawing.Color.LightGoldenrodYellow;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.MenuPanel);
-            this.Name = "SudokuForm";
+            this.Name = "SudokuGameForm";
             this.Text = "Sudoku";
             this.MenuPanel.ResumeLayout(false);
             this.MenuPanel.PerformLayout();

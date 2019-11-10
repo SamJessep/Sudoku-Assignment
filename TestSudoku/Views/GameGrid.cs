@@ -10,19 +10,19 @@ namespace Sudoku
 {
     class GameGrid
     {
+        private object controller;
         private Panel sudokuPanel;
         private Panel gameGrid;
         private Game game;
-        private Form parent;
         private int BoxWidth;
         private int textFontSize = 20;
         private int SelectedVal = 0;
 
-        public GameGrid(Game g, Form p, int w)
+        public GameGrid(Game g, int w, object c)
         {
+            controller = c;
             BoxWidth = w;
             game = g;
-            parent = p;
             sudokuPanel = new Panel
             {
                 Name = "Sudoku",
@@ -30,7 +30,7 @@ namespace Sudoku
                 Anchor = (AnchorStyles.Top | AnchorStyles.Left),
                 BorderStyle = BorderStyle.None,
                 AutoSize = true
-        };
+            };
         }
 
         public Panel MakeSudoku()
@@ -151,10 +151,11 @@ namespace Sudoku
             {
                 //changing a cell on the sudoku game
                 InputNumberOnSudoku(BtnClicked, btnText);
-                if (isComplete)
+                if (controller is GameController && isComplete)
                 {
-                    game.StopTimer();
-                    MessageBox.Show("Game Completed in: " + game.timeTaken + " seconds");
+                    GameController c = (GameController)controller;
+                    c.StopTimer();
+                    c.GameWon();
                 }
             }
         }
