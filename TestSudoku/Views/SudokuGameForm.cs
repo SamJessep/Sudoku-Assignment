@@ -95,6 +95,13 @@ namespace Sudoku
                     }
                 }
             }
+            foreach(Control c in GamePanel.Controls)
+            {
+                if(c is PictureBox)
+                {
+                    c.Visible = false;
+                }
+            }
         }
 
         public void UpdateTime()
@@ -153,12 +160,18 @@ namespace Sudoku
 
         private void AddCellValidator(Panel GamePanel)
         {
+            int n = controller.game.numberOfSquares;
             foreach(Panel square in GamePanel.Controls["SudokuGame"].Controls)
             {
                 foreach (Button cell in square.Controls)
                 {
                     cell.Click += ValidateCell;
                 }
+            }
+            for(int i = 0; i<n; i++)
+            {
+                GamePanel.Controls.Add(makeTick(n,i));
+                GamePanel.Controls.Add(makeTick(i,n));    
             }
         }
 
@@ -168,21 +181,23 @@ namespace Sudoku
             string[] nameParts = b.Name.Split('_');
             int row = int.Parse(nameParts[0]);
             int col = int.Parse(nameParts[1]);
-            //List<Button> rowBtns = GetButtons(row);
-            //List<Button> colBtns = GetButtons(col, true);
-            //ShowStatus(colBtns, controller.game.ColumnValid(col));
-            //ShowStatus(rowBtns, controller.game.RowValid(row));
-            b.Parent.Parent.Parent.Controls.Add(makeTick());
+            List<Button> rowBtns = GetButtons(row);
+            List<Button> colBtns = GetButtons(col, true);
+            ShowStatus(colBtns, controller.game.ColumnValid(col));
+            ShowStatus(rowBtns, controller.game.RowValid(row));
+            ShowTicStatus(col, controller.game.ColumnValid(col), row, controller.game.RowValid(row));
         }
 
-        private Control makeTick()
+        private Control makeTick(int row, int col)
         {
             PictureBox tick = new PictureBox
             {
-                Image = Image.FromFile("..//..//Images//check.png"),
+                Name = row + "_" + col,
+                BackgroundImage = Image.FromFile("..//..//Images//check.png"),
                 Size = new Size(50, 50),
-                Location = new Point(100, 100),
-                BackgroundImageLayout = ImageLayout.Zoom
+                Location = new Point(GamePanel.Controls["SudokuGame"].Left + col*50, row*50),
+                BackgroundImageLayout = ImageLayout.Zoom,
+                Visible = false
             };
             return tick;
         }
@@ -192,6 +207,14 @@ namespace Sudoku
             {
                 btn.BackColor = valid ? Color.Green : Color.White;
             }
+        }
+
+        private void ShowTicStatus(int colNum, bool colValid, int rowNum, bool rowValid)
+        {
+            PictureBox Coltick = (PictureBox)GamePanel.Controls[controller.game.numberOfSquares + "_" + colNum];
+            PictureBox Rowtick = (PictureBox)GamePanel.Controls[rowNum + "_" + controller.game.numberOfSquares];
+            Rowtick.Visible = (Rowtick.Name.Split('_')[0] == rowNum.ToString() && rowValid);
+            Coltick.Visible = (Coltick.Name.Split('_')[1] == colNum.ToString() && colValid);
         }
 
         public Label AddLabel(string name, string text, int row, int column)

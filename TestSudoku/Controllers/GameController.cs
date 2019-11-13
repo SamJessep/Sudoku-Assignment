@@ -90,8 +90,14 @@ namespace Sudoku
         public void GameWon()
         {
             view.Show("Game Completed in: " + game.timeTaken + " seconds");
+            SaveScore();
         }
-
+        
+        private void SaveScore()
+        {
+            game.SetHighScore();
+            game.SaveGame();
+        }
         public void SaveGame()
         {
             game.SaveGame();
