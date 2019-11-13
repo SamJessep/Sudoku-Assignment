@@ -26,7 +26,7 @@ namespace Sudoku
 
         private void GenerateBtn_Click(object sender, EventArgs e)
         {
-            controller.MakeGameTemplate();
+            //controller.MakeGameTemplate();
         }
 
         private void Export_Click(object sender, EventArgs e)

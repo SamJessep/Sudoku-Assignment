@@ -80,7 +80,7 @@ namespace Sudoku
             game = new Game();
             string path = editor.GetFilePath();
             game.FromCSV(path, false);
-            MakeGameTemplate();
+            //MakeGameTemplate();
         }
 
     }

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Security;
+using System.Collections.Generic;
 
 namespace Sudoku
 {
@@ -10,6 +11,7 @@ namespace Sudoku
     {
         private const int BoxWidth = 50;
         GameController controller;
+        Panel GamePanel;
         private int textFontSize = 20;
 
         public SudokuGameForm()
@@ -66,7 +68,8 @@ namespace Sudoku
             int H = 80 + BoxWidth * (game.gridHeight + 2);
             int W = 40 + BoxWidth * (game.gridWidth + 1);
             setWindowSize(W, H);
-            Panel GamePanel = new GameGrid(game, 50, controller).MakeSudoku();
+            GamePanel = new GameGrid(game, 50, controller).MakeSudoku();
+            AddCellValidator(GamePanel);
             GamePanel.Location = new Point((Width - GamePanel.Width) / 2, MenuPanel.Height);
             Controls.Add(GamePanel);
         }
@@ -85,6 +88,7 @@ namespace Sudoku
             {
                 foreach (Button cell in p.Controls)
                 {
+                    cell.BackColor = Color.White;
                     if (cell.Enabled)
                     {
                         cell.Text = "";
@@ -120,6 +124,73 @@ namespace Sudoku
             {
                 Controls["Sudoku"].Controls.Clear();
                 Controls.Remove(Controls["Sudoku"]);
+            }
+        }
+
+        private List<Button> GetButtons(int row , bool isCol = false)
+        {
+            int cellRow;
+            int cellCol;
+            List<Button> btns = new List<Button>();
+            foreach (Panel square in GamePanel.Controls["SudokuGame"].Controls)
+            {
+                foreach(Button cell in square.Controls)
+                {
+                    cellRow = int.Parse(cell.Name.Split('_')[0]);
+                    cellCol = int.Parse(cell.Name.Split('_')[1]);
+                    if (cellCol == row && isCol)
+                    {
+                        btns.Add(cell);
+                    }
+                    if (cellRow == row && !isCol)
+                    {
+                        btns.Add(cell);
+                    }
+                }
+            }
+            return btns;
+        }
+
+        private void AddCellValidator(Panel GamePanel)
+        {
+            foreach(Panel square in GamePanel.Controls["SudokuGame"].Controls)
+            {
+                foreach (Button cell in square.Controls)
+                {
+                    cell.Click += ValidateCell;
+                }
+            }
+        }
+
+        public void ValidateCell(object sender, EventArgs e)
+        {
+            Button b = (Button)sender;
+            string[] nameParts = b.Name.Split('_');
+            int row = int.Parse(nameParts[0]);
+            int col = int.Parse(nameParts[1]);
+            //List<Button> rowBtns = GetButtons(row);
+            //List<Button> colBtns = GetButtons(col, true);
+            //ShowStatus(colBtns, controller.game.ColumnValid(col));
+            //ShowStatus(rowBtns, controller.game.RowValid(row));
+            b.Parent.Parent.Parent.Controls.Add(makeTick());
+        }
+
+        private Control makeTick()
+        {
+            PictureBox tick = new PictureBox
+            {
+                Image = Image.FromFile("..//..//Images//check.png"),
+                Size = new Size(50, 50),
+                Location = new Point(100, 100),
+                BackgroundImageLayout = ImageLayout.Zoom
+            };
+            return tick;
+        }
+        private void ShowStatus(List<Button> btns, bool valid)
+        {
+            foreach(Button btn in btns)
+            {
+                btn.BackColor = valid ? Color.Green : Color.White;
             }
         }
 
