@@ -42,6 +42,7 @@ namespace Sudoku
         {
             // Create a timer with a one second interval.
             timer = new Timer(1000);
+            timeTaken = 0;
             // Hook up the Elapsed event for the timer. 
             timer.Elapsed += Count;
             timer.AutoReset = true;

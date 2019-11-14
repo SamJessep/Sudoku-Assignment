@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sudoku
 {
-    interface IGame
+    public interface IGame
     {
         void SetMaxValue(int maximum);
         int GetMaxValue();

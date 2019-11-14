@@ -151,16 +151,8 @@ namespace Sudoku
             {
                 //changing a cell on the sudoku game
                 InputNumberOnSudoku(BtnClicked, btnText);
-                if (controller is GameController && isComplete)
-                {
-                    GameController c = (GameController)controller;
-                    c.StopTimer();
-                    c.GameWon();
-                }
             }
         }
-
-        private bool isComplete => game.IsPuzzleValid();
 
         private void UpdateSelectedValue(string btnText)
         {

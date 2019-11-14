@@ -8,11 +8,11 @@ namespace Sudoku
 {
     partial class Game
     { 
-        public bool IsPuzzleValid()
+        public bool isPuzzleCompleted(bool ignoreZeros = false)
         {
             for (int i = 0; i < gridHeight; i++)
             {
-                if (!CellValid(i))
+                if (!CellValid(i, ignoreZeros))
                 {
                     return false;
                 }
@@ -22,52 +22,7 @@ namespace Sudoku
         
         public bool IsPuzzleValidForSaving() //Pretty much the same as is puzzle valid but it is ignoring 0's. For use in the puzzle editor
         {
-            for (int i = 0; i < numbersArray.Length; i++)
-            {
-                List<int> rowNums = new List<int>();
-                for (int a = 0; a < gridHeight; a++)
-                {
-                    if (numbersArray[GetByRow(a, GetColumnByIndex(i))] != 0)
-                    {
-                        rowNums.Add(numbersArray[GetByRow(a, GetColumnByIndex(i))]);
-                    }
-                }
-                int[] rows = rowNums.ToArray();
-                if (rows.Length != rows.Distinct().Count())
-                {
-                    return false;
-                }
-
-                List<int> colNums = new List<int>();
-                for (int b = 0; b < gridWidth; b++)
-                {
-                    if (numbersArray[GetByColumn(b, GetRowByIndex(i))] != 0)
-                    {
-                        colNums.Add(numbersArray[GetByColumn(b, GetRowByIndex(i))]);
-                    }
-                }
-                int[] cols = colNums.ToArray();
-                if (cols.Length != cols.Distinct().Count())
-                {
-                    return false;
-                }
-
-                List<int> squareNums = new List<int>();
-                for (int c = 0; c < numberOfSquares; c++)
-                {
-                    if (numbersArray[GetBySquare(GetSquareFromIndex(i), c)] != 0)
-                    {
-                        squareNums.Add(numbersArray[GetBySquare(GetSquareFromIndex(i), c)]);
-                    }
-                }
-                int[] squares = squareNums.ToArray();
-                if (squares.Length != squares.Distinct().Count())
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return isPuzzleCompleted(true);
         }
 
         public int NumberOfIncorrectSquares()
@@ -144,13 +99,13 @@ namespace Sudoku
             return validValues;
         }
 
-        public bool RowValid(int rowNumber)
+        public bool RowValid(int rowNumber, bool ignoreZero = false)
         {
             int[] newArray = new int[gridLength];
             for (int i = 0; i < gridWidth; i++)
             {
                 int number = numbersArray[GetByRow(rowNumber, i)];
-                if (number == 0 || newArray.Contains(number))
+                if ((!ignoreZero && number == 0) || newArray.Contains(number))
                 {
                     return false;
                 }
@@ -159,13 +114,13 @@ namespace Sudoku
             }
             return true;
         }
-        public bool ColumnValid(int columnNumber)
+        public bool ColumnValid(int columnNumber, bool ignoreZero = false)
         {
             int[] newArray = new int[gridLength];
             for (int i = 0; i < gridHeight; i++)
             {
                 int number = numbersArray[GetByColumn(columnNumber, i)];
-                if (number == 0 || newArray.Contains(number))
+                if ((!ignoreZero && number == 0) || newArray.Contains(number))
                 {
                     return false;
                 }
@@ -175,14 +130,14 @@ namespace Sudoku
             return true;
         }
 
-        public bool SquareValid(int squareNumber)
+        public bool SquareValid(int squareNumber, bool ignoreZero = false)
         {
             int Boxes = squareWidth * squareHeight;
             int[] newArray = new int[Boxes];
             for (int i = 0; i < Boxes; i++)
             {
                 int number = numbersArray[GetBySquare(squareNumber, i)];
-                if (number == 0 || newArray.Contains(number))
+                if ((!ignoreZero && number == 0) || newArray.Contains(number))
                 {
                     return false;
                 }
@@ -192,7 +147,7 @@ namespace Sudoku
             return true;
         }
 
-        public bool CellValid(int index)
+        public bool CellValid(int index, bool ignoreZero = false)
         {
             if (SquareValid(GetSquareFromIndex(index)) && (RowValid(GetRowByIndex(index))) && (ColumnValid(GetColumnByIndex(index))))
             {

@@ -15,7 +15,7 @@ namespace FeatureTests
             Game theGame = new Game();
             theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\valid3X3.csv")),false);
             //Act 
-            bool actualValue = theGame.IsPuzzleValid();
+            bool actualValue = theGame.isPuzzleCompleted();
             bool expectedValue = true;
             //Assert
             Assert.AreEqual(expectedValue, actualValue, "detects puzzle is valid");
@@ -28,7 +28,7 @@ namespace FeatureTests
             Game theGame = new Game();
             theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\invalid3X3.csv")), false);
             //Act 
-            bool actualValue = theGame.IsPuzzleValid();
+            bool actualValue = theGame.isPuzzleCompleted();
             bool expectedValue = false;
             //Assert
             Assert.AreEqual(expectedValue, actualValue, "detects puzzle is invalid");

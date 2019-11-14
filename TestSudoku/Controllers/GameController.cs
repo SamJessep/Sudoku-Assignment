@@ -8,10 +8,10 @@ namespace Sudoku
 {
     public class GameController
     {
-        protected SudokuGameForm view;
+        protected IGameView view;
         public Game game;
 
-        public GameController(SudokuGameForm theView, Game theGame)
+        public GameController(IGameView theView, Game theGame)
         {
             view = theView;
             game = theGame;
@@ -39,7 +39,7 @@ namespace Sudoku
                     bool hasSaved = Enumerable.SequenceEqual(game.numbersArray, game.lastSaveNumbersArray);
                     if (!hasSaved)
                     {
-                        var UserWantsToAbort = !view.GetBoolInput("Are you sure you want to load a new file, you will lose your current progress");
+                        var UserWantsToAbort = !view.GetBoolInput("Are you sure you want to load a new file, you will lose your current progress", "Warning");
                         if (UserWantsToAbort)
                         {
                             return;
@@ -62,16 +62,15 @@ namespace Sudoku
             {
                 game.FromCSV(gameFilePath, isLoadingSave);
                 view.DrawSudoku(game);
-                StartGameTimer();
+                StartTimer();
             }
             else
             {
                 view.Show("Game Load aborted");
             }
-                view.ToggleGameMenu(ChoseAGame);
         }
 
-        private void StartGameTimer()
+        public void StartTimer()
         {
             game.StartTimer();
             game.timer.Elapsed += UpdateViewTimer;
@@ -89,19 +88,28 @@ namespace Sudoku
 
         public void GameWon()
         {
-            view.Show("Game Completed in: " + game.timeTaken + " seconds");
-            SaveScore();
+            SetScore();
+            view.Show("Game Completed in: " + game.timeTaken + " seconds, Your score was:" + game.GetScore());
+            StopTimer();
         }
         
-        private void SaveScore()
+        private void SetScore()
         {
             game.SetHighScore();
             game.SaveGame();
         }
         public void SaveGame()
         {
-            game.SaveGame();
-            view.Show("Game Saved");
+            if (!game.isPuzzleCompleted())
+            {
+                game.SaveGame();
+                view.Show("Game Saved");
+            }
+            else
+            {
+                view.Show("You can't save a finished game");
+            }
+
         }
 
         public void ResetGame()
@@ -119,7 +127,7 @@ namespace Sudoku
             string secAsString = sec.ToString().Length == 1 ? "0" + sec : sec.ToString();
             string minAsString = min.ToString().Length == 1 ? "0" + min : min.ToString();
             string timeString = minAsString + ":" + secAsString;
-            return timeString;
+            return "Time: "+timeString;
         }
     }
 }

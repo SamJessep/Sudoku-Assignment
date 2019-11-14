@@ -30,11 +30,13 @@ namespace Sudoku
             controller.SaveGame();
         }
 
-        private void CheckBtn_Clicked(Object sender, EventArgs e)
+        private void CheckForComplete(object sender, EventArgs e)
         {
-            Color color = controller.game.IsPuzzleValid() ? Color.Green : Color.Red;
-            Button btn = (Button)sender;
-            btn.BackColor = color;
+            if (controller.game.isPuzzleCompleted())
+            {
+                controller.GameWon();
+                UpdateHighScore();
+            }
         }
 
         private void EditorBtn_Clicked(object sender, EventArgs e)
@@ -72,6 +74,7 @@ namespace Sudoku
             AddCellValidator(GamePanel);
             GamePanel.Location = new Point((Width - GamePanel.Width) / 2, MenuPanel.Height);
             Controls.Add(GamePanel);
+            UpdateHighScore();
         }
 
         public (bool, bool) ChooseGame()
@@ -79,44 +82,34 @@ namespace Sudoku
             LoadGameForm f = new LoadGameForm(this, controller.game);
             bool gameWasChosen = f.ShowDialog() == DialogResult.OK;
             bool loadingGameSave = f.loadingGameSave;
+            ToggleGameMenu(gameWasChosen);
             return (gameWasChosen, loadingGameSave);
         }
 
         public void ResetGame()
         {
-            foreach (Panel p in Controls["Sudoku"].Controls["SudokuGame"].Controls)
-            {
-                foreach (Button cell in p.Controls)
-                {
-                    cell.BackColor = Color.White;
-                    if (cell.Enabled)
-                    {
-                        cell.Text = "";
-                    }
-                }
-            }
-            foreach(Control c in GamePanel.Controls)
-            {
-                if(c is PictureBox)
-                {
-                    c.Visible = false;
-                }
-            }
+            Controls.Remove(Controls["Sudoku"]);
+            DrawSudoku(controller.game);
+            controller.StopTimer();
+            controller.StartTimer();
+            UpdateTime();
         }
 
         public void UpdateTime()
         {
-            Label TimeLbl = (Label)Controls["MenuPanel"].Controls["CurrentTime"];
+            Label TimeLbl = GameTimer;
             TimeLbl.Text = controller.GetTimeAsString();
         }
 
-
+        public void UpdateHighScore()
+        {
+            Label HighScoreLbl = Highscore;
+            HighScoreLbl.Text = "Highscore: " + controller.game.highScore;
+        }
 
         public void ToggleGameMenu(bool visible)
         {
-            MenuPanel.Controls["SaveBtn"].Visible = visible;
-            MenuPanel.Controls["Check"].Visible = visible;
-            MenuPanel.Controls["ResetBtn"].Visible = visible;
+            GameHUD.Visible = visible;
         }
 
         private void setWindowSize(int w, int h)
@@ -166,6 +159,7 @@ namespace Sudoku
                 foreach (Button cell in square.Controls)
                 {
                     cell.Click += ValidateCell;
+                    cell.Click += CheckForComplete;
                 }
             }
             for(int i = 0; i<n; i++)

@@ -8,18 +8,18 @@ namespace Sudoku
 {
     public class EditorController
     {
-        EditorForm editor;
+        IEditor editor;
         Game game;
 
-        public EditorController(EditorForm e)
+        public EditorController(IEditor editorView)
         {
-            editor = e;
-            e.SetController(this);
+            editor = editorView;
+            editor.SetController(this);
         }
 
         public void StartEditor()
         {
-            editor.Show();
+            editor.Start();
         }
 
         public void ExportSudoku()
@@ -39,16 +39,18 @@ namespace Sudoku
             SaveFile(filePath, gameSettings, csvGame);
         }
 
-        public void MakeGameTemplate(Game gameTemplate)
+        public void MakeGameTemplate(Game gameTemplate = null)
         {
-            game = gameTemplate;
+            game = gameTemplate ?? new Game();
+            if(gameTemplate == null)
+            {
+                game.SetSettings(GetGameSettings(), false);
+            }
             AddTemplate();
         }
         public void AddTemplate()
         {
-            editor.ToggleExportBtn(true);
             editor.ClearTemplate();
-            game.SetSettings(GetGameSettings(), false);
             editor.DrawTemplateComponent(game);
         }
 
@@ -77,10 +79,10 @@ namespace Sudoku
 
         public void LoadGameFile()
         {
-            game = new Game();
+            Game loadedGameTemplate = new Game();
             string path = editor.GetFilePath();
-            game.FromCSV(path, false);
-            //MakeGameTemplate();
+            loadedGameTemplate.FromCSV(path, false);
+            MakeGameTemplate(loadedGameTemplate);
         }
 
     }

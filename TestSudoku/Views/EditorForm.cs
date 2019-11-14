@@ -19,6 +19,11 @@ namespace Sudoku
             InitializeComponent();
         }
 
+        public void Start()
+        {
+            Show();
+        }
+
         public void SetController(EditorController c)
         {
             controller = c;
@@ -26,7 +31,13 @@ namespace Sudoku
 
         private void GenerateBtn_Click(object sender, EventArgs e)
         {
-            //controller.MakeGameTemplate();
+            controller.MakeGameTemplate();
+        }
+
+        private void LoadFile_Click(object sender, EventArgs e)
+        {
+            controller.LoadGameFile();
+
         }
 
         private void Export_Click(object sender, EventArgs e)
@@ -49,11 +60,23 @@ namespace Sudoku
         {
             GameGrid GG = new GameGrid(game, 50, controller);
             Panel SudokuPanel = GG.MakeSudoku();
+            EnableLockedCells(SudokuPanel);
             //Center add 10 px padding to top
             SudokuPanel.Location = new Point((TemplateArea.Width - SudokuPanel.Width) / 2, 10);
             TemplateArea.Controls.Add(SudokuPanel);
+            ToggleExportBtn(true);
         }
 
+        public void EnableLockedCells(Panel gamePanel)
+        {
+            foreach(Panel square in gamePanel.Controls["SudokuGame"].Controls)
+            {
+                foreach(Button cell in square.Controls)
+                {
+                    cell.Enabled = true;
+                }
+            }
+        }
 
         public string GetSaveFilePath()
         {
@@ -82,9 +105,5 @@ namespace Sudoku
             Export.Enabled = enabled;
         }
 
-        private void LoadFile_Click(object sender, EventArgs e)
-        {
-            controller.LoadGameFile();
-        }
     }
 }

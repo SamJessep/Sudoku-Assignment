@@ -12,6 +12,7 @@ namespace Sudoku
     public partial class Game : ISerialize
     {
         private string currentGameFile;
+
         public string FromCSV(string csv, bool loadSave)
         {
             csv = GetRelativePath(csv, AppDomain.CurrentDomain.BaseDirectory);
