@@ -19,7 +19,7 @@ namespace Sudoku
             InitializeComponent();
         }
 
-        public void Start()
+        public new void Start()
         {
             Show();
         }
@@ -50,6 +50,13 @@ namespace Sudoku
         public int getSquareHeight() => (int)SquareHeight.Value;
 
         public int getTargetTime() => (int)TargetTime.Value;
+
+        public void UpdateGameUI(GameSettings gameSettings)
+        {
+            SquareWidth.Value = gameSettings.SquareWidth;
+            SquareHeight.Value = gameSettings.SquareHeight;
+            TargetTime.Value = gameSettings.TargetTime;
+        }
 
         public void ClearTemplate()
         {

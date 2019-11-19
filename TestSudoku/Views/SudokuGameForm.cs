@@ -49,18 +49,18 @@ namespace Sudoku
             controller.ResetGame();
         }
 
-        public void SetController(GameController theController)
+        public new void SetController(GameController theController)
         {
             controller = theController;
         }
 
-        public void Start()
+        public new void Start()
         {
             Application.EnableVisualStyles();
             Application.Run(this);
         }
 
-        public void Stop()
+        public new void Stop()
         {
             Close();
         }
@@ -151,6 +151,16 @@ namespace Sudoku
             return btns;
         }
 
+        private List<Button> GetButtonsFromSquare(int squareIndex)
+        {
+            List<Button> btns = new List<Button>();
+            foreach (Button cell in GamePanel.Controls["SudokuGame"].Controls[squareIndex.ToString()].Controls)
+            {
+              btns.Add(cell);
+            }
+            return btns;
+        }
+
         private void AddCellValidator(Panel GamePanel)
         {
             int n = controller.game.numberOfSquares;
@@ -175,10 +185,13 @@ namespace Sudoku
             string[] nameParts = b.Name.Split('_');
             int row = int.Parse(nameParts[0]);
             int col = int.Parse(nameParts[1]);
+            int squareIndex = controller.game.GetSquareFromIndex(controller.game.GetByColumn(col, row));
             List<Button> rowBtns = GetButtons(row);
             List<Button> colBtns = GetButtons(col, true);
+            List<Button> squareBtns = GetButtonsFromSquare(squareIndex);
             ShowStatus(colBtns, controller.game.ColumnValid(col));
             ShowStatus(rowBtns, controller.game.RowValid(row));
+            ShowStatus(squareBtns, controller.game.SquareValid(squareIndex));
             ShowTicStatus(col, controller.game.ColumnValid(col), row, controller.game.RowValid(row));
         }
 

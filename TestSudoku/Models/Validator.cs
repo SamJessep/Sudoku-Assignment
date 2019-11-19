@@ -105,7 +105,7 @@ namespace Sudoku
             for (int i = 0; i < gridWidth; i++)
             {
                 int number = numbersArray[GetByRow(rowNumber, i)];
-                if ((!ignoreZero && number == 0) || newArray.Contains(number))
+                if ((!ignoreZero && number == 0) || (newArray.Contains(number) && number != 0))
                 {
                     return false;
                 }
@@ -120,7 +120,7 @@ namespace Sudoku
             for (int i = 0; i < gridHeight; i++)
             {
                 int number = numbersArray[GetByColumn(columnNumber, i)];
-                if ((!ignoreZero && number == 0) || newArray.Contains(number))
+                if ((!ignoreZero && number == 0) || (newArray.Contains(number) && number != 0))
                 {
                     return false;
                 }
@@ -137,7 +137,8 @@ namespace Sudoku
             for (int i = 0; i < Boxes; i++)
             {
                 int number = numbersArray[GetBySquare(squareNumber, i)];
-                if ((!ignoreZero && number == 0) || newArray.Contains(number))
+                
+                if ((!ignoreZero && number == 0) || (newArray.Contains(number) && number!=0))
                 {
                     return false;
                 }
@@ -149,7 +150,7 @@ namespace Sudoku
 
         public bool CellValid(int index, bool ignoreZero = false)
         {
-            if (SquareValid(GetSquareFromIndex(index)) && (RowValid(GetRowByIndex(index))) && (ColumnValid(GetColumnByIndex(index))))
+            if (SquareValid(GetSquareFromIndex(index), ignoreZero) && (RowValid(GetRowByIndex(index), ignoreZero)) && (ColumnValid(GetColumnByIndex(index), ignoreZero)))
             {
                 return true;
             }

@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    public interface IEditor
+    public interface IEditor:IView
     {
-        void SetController(EditorController gameController);
-        void Start();
-        void Stop();
-        void Show<T>(T Prompt);
-        bool GetBoolInput(string prompt, string title);
+        void SetController(EditorController c);
         int getSquareWidth();
         int getSquareHeight();
         int getTargetTime();
@@ -20,6 +16,7 @@ namespace Sudoku
         void DrawTemplateComponent(Game g);
         string GetSaveFilePath();
         string GetFilePath();
+        void UpdateGameUI(GameSettings gameSettings);
 
     }
 }

@@ -41,11 +41,22 @@ namespace Sudoku
 
         public void MakeGameTemplate(Game gameTemplate = null)
         {
-            game = gameTemplate ?? new Game();
-            if(gameTemplate == null)
+            GameSettings GS;
+            if (gameTemplate != null)
             {
-                game.SetSettings(GetGameSettings(), false);
+                game = gameTemplate;
+                GS = game.GetSettings();
+                editor.UpdateGameUI(GS);
+                game.SetSettings(GS, false);
             }
+            else
+            {
+                game = new Game();
+                GS = GetGameSettings();
+                game.SetSettings(GS, false);
+                game.EmptyGrid();
+            }
+            
             AddTemplate();
         }
         public void AddTemplate()

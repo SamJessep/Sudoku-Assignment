@@ -24,6 +24,7 @@ namespace Sudoku
             string Settings = csvParts["Settings"];
             GameSettings csvSettings = ReadJsonSettings(Settings);
             SetSettings(csvSettings, loadSave);
+            EmptyGrid();
             LoadNumbersArray(OriginalSudoku, loadSave?EditedSudoku:OriginalSudoku);
             return "loaded: " + csv + ".csv "+ (loadSave?"saved ":"orginal ") + "Sudoku";
         }
@@ -71,6 +72,10 @@ namespace Sudoku
             gridHeight = gridWidth = squareWidth * squareHeight;
             gridLength = gridHeight * gridWidth;
             numberOfSquares = gridHeight;
+        }
+
+        public void EmptyGrid()
+        {
             numbersArray = new int[gridLength];
             originalNumbersArray = new int[gridLength];
             lastSaveNumbersArray = new int[gridLength];

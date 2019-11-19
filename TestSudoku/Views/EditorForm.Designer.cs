@@ -248,7 +248,7 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox Size;
+        private new System.Windows.Forms.GroupBox Size;
         private System.Windows.Forms.Label WidthLabel;
         private System.Windows.Forms.Label HeightLabel;
         private System.Windows.Forms.NumericUpDown SquareWidth;
