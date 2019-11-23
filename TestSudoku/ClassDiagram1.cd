@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Sudoku.EditorController" Collapsed="true">
+    <Position X="6.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAABAACCAAAAAQAAAAAAAAQAIBAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\EditorController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.GameController" Collapsed="true">
+    <Position X="5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAEAAAAAAAAIAAAIAAAoIQkAAkAAAAE=</HashCode>
+      <FileName>Controllers\GameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.Game" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>VAUmFAqgwZTUHAEQIJAiAMTI4AhIAMmQABAAmoDAGRg=</HashCode>
+      <FileName>Models\Editor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sudoku.GameSettings" Collapsed="true">
+    <Position X="8.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAIAAAAACAACQAAAAAAAAQAAAAAAAAAQ=</HashCode>
+      <FileName>Models\GameSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.Program" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.ConsoleView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAABQEAQAAAAAAAEAAEAAAAIAAACAAAAAA=</HashCode>
+      <FileName>Views\ConsoleView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sudoku.EditorForm" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAEAAAACIQgoEQAoCCBJCGEgIIAAAAACAAIAAABAg=</HashCode>
+      <FileName>Views\EditorForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sudoku.FormView" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAABAAAAAAAAAAAEAAEAAAAIAAACAAAAAA=</HashCode>
+      <FileName>Views\FormView.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sudoku.GameGrid" Collapsed="true">
+    <Position X="6.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABQAAQAAAAAAAMAAAAgBgAEJAAgAAIIAAAAAAAIAiA=</HashCode>
+      <FileName>Views\GameGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.LoadGameForm" Collapsed="true">
+    <Position X="5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAIAABAAACAAAAABAACAAAACAIABAAAAMAAAAIAAAQQ=</HashCode>
+      <FileName>Views\LoadGameForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sudoku.SudokuGameForm" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAFgBAABgGIoIQFAYgCIQCEKkAAiACAAJAABAAIoQCA=</HashCode>
+      <FileName>Views\SudokuGameForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sudoku.Properties.Resources" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Sudoku.IEditor" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAEAAAAAIABAAAAgAAAAAAEAIAAAAAAAAAIAAAAAg=</HashCode>
+      <FileName>Interfaces\IEditor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sudoku.IGame" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAABAAAAIACAAAAAAAAAAAAAAAAAABAAAg=</HashCode>
+      <FileName>Interfaces\IGame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sudoku.IGameView" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAABQEAQAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IGameView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sudoku.IGet" Collapsed="true">
+    <Position X="6.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Interfaces\IGet.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sudoku.ISerialize" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAEAAAAABAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Interfaces\ISerialize.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sudoku.ISet" Collapsed="true">
+    <Position X="5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAQAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ISet.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sudoku.IView" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAEAAEAAAAIAAACAAAAAA=</HashCode>
+      <FileName>Interfaces\IView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

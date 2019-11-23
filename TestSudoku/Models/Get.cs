@@ -52,7 +52,7 @@ namespace Sudoku
         { 
             int squareCol = (GetColumnByIndex(index)) / squareWidth;
             int squareRow = (GetRowByIndex(index)) / squareHeight;
-            int square = squareRow * squareWidth + squareCol;
+            int square = squareRow * (gridWidth/squareWidth) + squareCol;
             return square;
         }
     }

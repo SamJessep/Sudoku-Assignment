@@ -90,12 +90,13 @@ namespace Sudoku
         {
             SetScore();
             view.Show("Game Completed in: " + game.timeTaken + " seconds, Your score was:" + game.GetScore());
+            view.Show("Moves:" + game.moves + "TimeTaken:" + game.timeTaken);
             StopTimer();
         }
         
         private void SetScore()
         {
-            game.SetHighScore();
+            game.UpdateHighScore();
             game.SaveGame();
         }
         public void SaveGame()

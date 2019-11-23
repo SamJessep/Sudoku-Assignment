@@ -41,6 +41,7 @@ namespace Sudoku
             this.ResetBtn = new System.Windows.Forms.Button();
             this.GameHUD = new System.Windows.Forms.Panel();
             this.Highscore = new System.Windows.Forms.Label();
+            this.HintBtn = new System.Windows.Forms.Button();
             this.MenuPanel.SuspendLayout();
             this.GameHUD.SuspendLayout();
             this.SuspendLayout();
@@ -77,9 +78,9 @@ namespace Sudoku
             this.SaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.SaveBtn.Location = new System.Drawing.Point(5, 5);
+            this.SaveBtn.Location = new System.Drawing.Point(3, 6);
             this.SaveBtn.Name = "SaveBtn";
-            this.SaveBtn.Size = new System.Drawing.Size(100, 40);
+            this.SaveBtn.Size = new System.Drawing.Size(79, 40);
             this.SaveBtn.TabIndex = 3;
             this.SaveBtn.Tag = "Load/Save";
             this.SaveBtn.Text = "Save";
@@ -117,7 +118,7 @@ namespace Sudoku
             // 
             this.GameTimer.AutoSize = true;
             this.GameTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GameTimer.Location = new System.Drawing.Point(220, 14);
+            this.GameTimer.Location = new System.Drawing.Point(285, 14);
             this.GameTimer.Name = "GameTimer";
             this.GameTimer.Size = new System.Drawing.Size(108, 24);
             this.GameTimer.TabIndex = 7;
@@ -132,9 +133,9 @@ namespace Sudoku
             this.ResetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ResetBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ResetBtn.Location = new System.Drawing.Point(110, 5);
+            this.ResetBtn.Location = new System.Drawing.Point(88, 6);
             this.ResetBtn.Name = "ResetBtn";
-            this.ResetBtn.Size = new System.Drawing.Size(100, 40);
+            this.ResetBtn.Size = new System.Drawing.Size(73, 40);
             this.ResetBtn.TabIndex = 6;
             this.ResetBtn.Tag = "Load/Save";
             this.ResetBtn.Text = "Reset";
@@ -143,6 +144,7 @@ namespace Sudoku
             // 
             // GameHUD
             // 
+            this.GameHUD.Controls.Add(this.HintBtn);
             this.GameHUD.Controls.Add(this.ResetBtn);
             this.GameHUD.Controls.Add(this.Highscore);
             this.GameHUD.Controls.Add(this.GameTimer);
@@ -157,11 +159,29 @@ namespace Sudoku
             // 
             this.Highscore.AutoSize = true;
             this.Highscore.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Highscore.Location = new System.Drawing.Point(347, 14);
+            this.Highscore.Location = new System.Drawing.Point(399, 14);
             this.Highscore.Name = "Highscore";
             this.Highscore.Size = new System.Drawing.Size(117, 24);
             this.Highscore.TabIndex = 7;
             this.Highscore.Text = "Highscore: 0";
+            // 
+            // HintBtn
+            // 
+            this.HintBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.HintBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.HintBtn.BackColor = System.Drawing.SystemColors.Menu;
+            this.HintBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.HintBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HintBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HintBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.HintBtn.Location = new System.Drawing.Point(167, 6);
+            this.HintBtn.Name = "HintBtn";
+            this.HintBtn.Size = new System.Drawing.Size(86, 40);
+            this.HintBtn.TabIndex = 8;
+            this.HintBtn.Tag = "Load/Save";
+            this.HintBtn.Text = "Hint";
+            this.HintBtn.UseVisualStyleBackColor = false;
+            this.HintBtn.Click += new System.EventHandler(this.HintBtn_Click);
             // 
             // SudokuGameForm
             // 
@@ -192,5 +212,6 @@ namespace Sudoku
         private Label GameTimer;
         private Panel GameHUD;
         private Label Highscore;
+        private Button HintBtn;
     }
 }

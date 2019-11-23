@@ -151,6 +151,7 @@ namespace Sudoku
             {
                 //changing a cell on the sudoku game
                 InputNumberOnSudoku(BtnClicked, btnText);
+                game.moves++;
             }
         }
 

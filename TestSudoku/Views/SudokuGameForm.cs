@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Security;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sudoku
 {
@@ -71,10 +72,10 @@ namespace Sudoku
             int W = 40 + BoxWidth * (game.gridWidth + 1);
             setWindowSize(W, H);
             GamePanel = new GameGrid(game, 50, controller).MakeSudoku();
-            AddCellValidator(GamePanel);
             GamePanel.Location = new Point((Width - GamePanel.Width) / 2, MenuPanel.Height);
             Controls.Add(GamePanel);
             UpdateHighScore();
+            AddCellValidator(GamePanel);
         }
 
         public (bool, bool) ChooseGame()
@@ -127,101 +128,50 @@ namespace Sudoku
             }
         }
 
-        private List<Button> GetButtons(int row , bool isCol = false)
+        private dynamic GetButton(string name)
         {
-            int cellRow;
-            int cellCol;
-            List<Button> btns = new List<Button>();
             foreach (Panel square in GamePanel.Controls["SudokuGame"].Controls)
-            {
-                foreach(Button cell in square.Controls)
-                {
-                    cellRow = int.Parse(cell.Name.Split('_')[0]);
-                    cellCol = int.Parse(cell.Name.Split('_')[1]);
-                    if (cellCol == row && isCol)
-                    {
-                        btns.Add(cell);
-                    }
-                    if (cellRow == row && !isCol)
-                    {
-                        btns.Add(cell);
-                    }
-                }
-            }
-            return btns;
-        }
-
-        private List<Button> GetButtonsFromSquare(int squareIndex)
-        {
-            List<Button> btns = new List<Button>();
-            foreach (Button cell in GamePanel.Controls["SudokuGame"].Controls[squareIndex.ToString()].Controls)
-            {
-              btns.Add(cell);
-            }
-            return btns;
-        }
-
-        private void AddCellValidator(Panel GamePanel)
-        {
-            int n = controller.game.numberOfSquares;
-            foreach(Panel square in GamePanel.Controls["SudokuGame"].Controls)
             {
                 foreach (Button cell in square.Controls)
                 {
-                    cell.Click += ValidateCell;
-                    cell.Click += CheckForComplete;
+                    if (cell.Name == name)
+                    {
+                        return cell;
+                    }
                 }
             }
-            for(int i = 0; i<n; i++)
+            return false;
+        }
+
+        private void ValidateCells(object sender, EventArgs e)
+        {
+            //loop through each square, one loop check one square col and row
+            for(int i = 0; i< controller.game.numberOfSquares; i++)
             {
-                GamePanel.Controls.Add(makeTick(n,i));
-                GamePanel.Controls.Add(makeTick(i,n));    
+                List<Button> controlList = new List<Button>();
+                List<Button> squareList = new List<Button>();
+                bool valid = controller.game.SquareValid(i);
+                Panel square = (Panel)GamePanel.Controls["SudokuGame"].Controls[i];
+                
+                if (valid)
+                {
+                    squareList.AddRange(square.Controls.OfType<Button>());
+                }
+                valid = controller.game.RowValid(i);
+                if (valid)
+                {
+                    controlList.AddRange(GetButtons(i));
+                }
+                valid = controller.game.ColumnValid(i);
+                if (valid)
+                {
+                    controlList.AddRange(GetButtons(i, true));
+                }
+                
+                 ShowTicStatus(i, controller.game.ColumnValid(i), i, controller.game.RowValid(i));
+                //ShowStatus(controlList, true);
+                ShowStatus(squareList, true);
             }
-        }
-
-        public void ValidateCell(object sender, EventArgs e)
-        {
-            Button b = (Button)sender;
-            string[] nameParts = b.Name.Split('_');
-            int row = int.Parse(nameParts[0]);
-            int col = int.Parse(nameParts[1]);
-            int squareIndex = controller.game.GetSquareFromIndex(controller.game.GetByColumn(col, row));
-            List<Button> rowBtns = GetButtons(row);
-            List<Button> colBtns = GetButtons(col, true);
-            List<Button> squareBtns = GetButtonsFromSquare(squareIndex);
-            ShowStatus(colBtns, controller.game.ColumnValid(col));
-            ShowStatus(rowBtns, controller.game.RowValid(row));
-            ShowStatus(squareBtns, controller.game.SquareValid(squareIndex));
-            ShowTicStatus(col, controller.game.ColumnValid(col), row, controller.game.RowValid(row));
-        }
-
-        private Control makeTick(int row, int col)
-        {
-            PictureBox tick = new PictureBox
-            {
-                Name = row + "_" + col,
-                BackgroundImage = Image.FromFile("..//..//Images//check.png"),
-                Size = new Size(50, 50),
-                Location = new Point(GamePanel.Controls["SudokuGame"].Left + col*50, row*50),
-                BackgroundImageLayout = ImageLayout.Zoom,
-                Visible = false
-            };
-            return tick;
-        }
-        private void ShowStatus(List<Button> btns, bool valid)
-        {
-            foreach(Button btn in btns)
-            {
-                btn.BackColor = valid ? Color.Green : Color.White;
-            }
-        }
-
-        private void ShowTicStatus(int colNum, bool colValid, int rowNum, bool rowValid)
-        {
-            PictureBox Coltick = (PictureBox)GamePanel.Controls[controller.game.numberOfSquares + "_" + colNum];
-            PictureBox Rowtick = (PictureBox)GamePanel.Controls[rowNum + "_" + controller.game.numberOfSquares];
-            Rowtick.Visible = (Rowtick.Name.Split('_')[0] == rowNum.ToString() && rowValid);
-            Coltick.Visible = (Coltick.Name.Split('_')[1] == colNum.ToString() && colValid);
         }
 
         public Label AddLabel(string name, string text, int row, int column)
@@ -243,6 +193,111 @@ namespace Sudoku
             };
             return l;
         }
+
+        private void ShowStatus(List<Button> btns, bool valid)
+        {
+            foreach (Button btn in btns)
+            {
+                btn.BackColor = valid ? Color.Green : Color.White;
+            }
+        }
+
+        private List<Button> GetButtons(int index , bool isCol = false)
+        {
+            int nameIndex = isCol ? 1 : 0;
+            List<Button> btns = new List<Button>();
+            foreach (Panel square in GamePanel.Controls["SudokuGame"].Controls)
+            {
+                foreach(Button cell in square.Controls)
+                {
+                    if (index == int.Parse(cell.Name.Split('_')[nameIndex]))
+                    {
+                        btns.Add(cell);
+                    }
+                }
+            }
+            return btns;
+        }
         
+        private List<Button> GetButtonsFromSquare(int squareIndex)
+        {
+            List<Button> btns = new List<Button>();
+            foreach (Button cell in GamePanel.Controls["SudokuGame"].Controls[squareIndex.ToString()].Controls)
+            {
+              btns.Add(cell);
+            }
+            return btns;
+        }
+
+        private void AddCellValidator(Panel GamePanel)
+        {
+            int n = controller.game.numberOfSquares;
+            foreach(Panel square in GamePanel.Controls["SudokuGame"].Controls)
+            {
+                foreach (Button cell in square.Controls)
+                {
+                    cell.Click += ValidateCells;
+                    cell.Click += CheckForComplete;
+                }
+            }
+            for(int i = 0; i<n; i++)
+            {
+                GamePanel.Controls.Add(makeTick(n,i));
+                GamePanel.Controls.Add(makeTick(i,n));    
+            }
+        }
+        /*
+        public void ValidateCell(object sender, EventArgs e)
+        {
+            Button b = (Button)sender;
+            string[] nameParts = b.Name.Split('_');
+            int row = int.Parse(nameParts[0]);
+            int col = int.Parse(nameParts[1]);
+            int squareIndex = controller.game.GetSquareFromIndex(controller.game.GetByColumn(col, row));
+            List<Button> rowBtns = GetButtons(row);
+            List<Button> colBtns = GetButtons(col, true);
+            List<Button> squareBtns = GetButtonsFromSquare(squareIndex);
+            ShowStatus(colBtns, controller.game.ColumnValid(col));
+            ShowStatus(rowBtns, controller.game.RowValid(row));
+            ShowStatus(squareBtns, controller.game.SquareValid(squareIndex));
+            ShowTicStatus(col, controller.game.ColumnValid(col), row, controller.game.RowValid(row));
+        }
+        */
+        private Control makeTick(int row, int col)
+        {
+            PictureBox tick = new PictureBox
+            {
+                Name = row + "_" + col,
+                BackgroundImage = Image.FromFile("..//..//Images//check.png"),
+                Size = new Size(50, 50),
+                Location = new Point(GamePanel.Controls["SudokuGame"].Left + col*50, row*50),
+                BackgroundImageLayout = ImageLayout.Zoom,
+                Visible = false
+            };
+            return tick;
+        }
+
+        private void ShowTicStatus(int colNum, bool colValid, int rowNum, bool rowValid)
+        {
+            PictureBox Coltick = (PictureBox)GamePanel.Controls[controller.game.numberOfSquares + "_" + colNum];
+            PictureBox Rowtick = (PictureBox)GamePanel.Controls[rowNum + "_" + controller.game.numberOfSquares];
+            Rowtick.Visible = (Rowtick.Name.Split('_')[0] == rowNum.ToString() && rowValid);
+            Coltick.Visible = (Coltick.Name.Split('_')[1] == colNum.ToString() && colValid);
+        }
+
+        private void HintBtn_Click(object sender, EventArgs e)
+        {
+            int[] hint = controller.game.GetHint();
+            if (hint.Length > 1)
+            {
+                int row = controller.game.GetRowByIndex(hint[0]);
+                int col = controller.game.GetColumnByIndex(hint[0]);
+                Button btn = (Button)GetButton(row + "_" + col);
+                btn.BackColor = Color.Yellow;
+                btn.Text = hint[1].ToString();
+                controller.game.SetCell(hint[1], hint[0]);
+                CheckForComplete(this, EventArgs.Empty);
+            }
+        }
     }
 }

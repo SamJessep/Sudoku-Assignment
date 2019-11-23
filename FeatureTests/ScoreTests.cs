@@ -33,7 +33,7 @@ namespace FeatureTests
             theGame.FromCSV(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\GameSaves\invalid3X3Incomplete.csv")), false);
             theGame.timeTaken = 50;
             theGame.targetTime = 100;
-            theGame.SetHighScore();
+            theGame.UpdateHighScore();
 
             int expectedVal = 16200;
             int actualVal = theGame.highScore;
@@ -49,7 +49,7 @@ namespace FeatureTests
             theGame.highScore = 10000;
             theGame.timeTaken = 1000;
             theGame.targetTime = 100;
-            theGame.SetHighScore();
+            theGame.UpdateHighScore();
 
             int expectedVal = 10000;
             int actualVal = theGame.highScore;

@@ -13,7 +13,7 @@ namespace Sudoku
 
         public int[] GetHint()
         {
-            if(CountZeros(numbersArray) == 0)
+            if(!numbersArray.Contains(0))
             {
                 int[] a = new int[0];
                 return a;
@@ -32,6 +32,10 @@ namespace Sudoku
                 }
             }
             int[] hints = GetValidValues(x);
+            if (hints == null)
+            {
+                return GetHint();
+            }
             int[] result = new int[hints.Length + 1];
             result[0] = x;
             for (var i = 0; i < hints.Length; i++)
