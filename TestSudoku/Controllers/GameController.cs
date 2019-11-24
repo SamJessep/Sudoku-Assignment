@@ -10,6 +10,7 @@ namespace Sudoku
     {
         protected IGameView view;
         public Game game;
+        public int SelectedControl = 0;
 
         public GameController(IGameView theView, Game theGame)
         {
@@ -118,7 +119,19 @@ namespace Sudoku
             string gamePath = game.currentGameFile;
             game = new Game();
             game.FromCSV(gamePath, false);
+            game.timeTaken = 0;
             view.ResetGame();
+        }
+
+        public void Undo()
+        {
+            int[] LastMove = game.moves[game.moves.Count - 2];
+            game.SetCell(LastMove[1], LastMove[0]);
+            view.UpdateCellOnView(LastMove[1], LastMove[0]);
+        }
+        public void Redo()
+        {
+
         }
 
 

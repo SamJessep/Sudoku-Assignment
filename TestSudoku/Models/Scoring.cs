@@ -13,7 +13,7 @@ namespace Sudoku
         public int highScore;
         public int targetTime;
         public int timeTaken;
-        public int moves = 0;
+        public List<int[]> moves = new List<int[]>();
         private double baseScore;
         public Timer timer;
 
@@ -23,8 +23,7 @@ namespace Sudoku
             
             int emptySquares = CountEmptySquares();
             baseScore = Math.Pow(gridLength, ((double)emptySquares / (double)3));
-            targetTime = gridLength * 5;
-            double movesPenalty = moves / emptySquares;
+            double movesPenalty = moves.Count / emptySquares;
             double timeScore = 1 - ((double)timeTaken / (double)targetTime);
             double ratioOfHints = (double)hintsUsed / (double)emptySquares;
             double negativePenatlty = (double)timeScore * (double)movesPenalty;
@@ -42,7 +41,7 @@ namespace Sudoku
         {
             // Create a timer with a one second interval.
             timer = new Timer(1000);
-            timeTaken = 0;
+            
             // Hook up the Elapsed event for the timer. 
             timer.Elapsed += Count;
             timer.AutoReset = true;

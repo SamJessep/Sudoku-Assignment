@@ -14,6 +14,7 @@ namespace Sudoku
         void ResetGame();
         void UpdateTime();
         void ClearGameScreen();
+        void UpdateCellOnView(int value, int index);
 
     }
 }

@@ -50,6 +50,16 @@ namespace Sudoku
             controller.ResetGame();
         }
 
+        private void UndoBtn_Clicked(object sender, EventArgs e)
+        {
+            controller.Undo();
+        }
+
+        private void RedoBtn_Clicked(object sender, EventArgs e)
+        {
+            controller.Redo();
+        }
+
         public new void SetController(GameController theController)
         {
             controller = theController;
@@ -76,6 +86,7 @@ namespace Sudoku
             Controls.Add(GamePanel);
             UpdateHighScore();
             AddCellValidator(GamePanel);
+            ValidateCells(this, EventArgs.Empty);
         }
 
         public (bool, bool) ChooseGame()
@@ -204,7 +215,7 @@ namespace Sudoku
             return btns;
         }
 
-        private dynamic GetButtonByName(string name)
+        public dynamic GetButtonByName(string name)
         {
             foreach (Panel square in GamePanel.Controls["SudokuGame"].Controls)
             {
@@ -270,6 +281,14 @@ namespace Sudoku
                 controller.game.SetCell(hint[1], hint[0]);
                 CheckForComplete(this, EventArgs.Empty);
             }
+        }
+
+        public void UpdateCellOnView(int value, int index)
+        {
+            int col = controller.game.GetColumnByIndex(index);
+            int row = controller.game.GetRowByIndex(index);
+            Button btn = GetButtonByName(row + "_" + col);
+            btn.Text = value == 0 ? "" : value.ToString();
         }
     }
 }

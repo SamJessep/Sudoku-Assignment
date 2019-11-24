@@ -10,13 +10,12 @@ namespace Sudoku
 {
     class GameGrid
     {
-        private object controller;
+        private dynamic controller;
         private Panel sudokuPanel;
         private Panel gameGrid;
         private Game game;
         private int BoxWidth;
         private int textFontSize = 20;
-        private int SelectedVal = 0;
 
         public GameGrid(Game g, int w, object c)
         {
@@ -151,7 +150,12 @@ namespace Sudoku
             {
                 //changing a cell on the sudoku game
                 InputNumberOnSudoku(BtnClicked, btnText);
-                game.moves++;
+                string[] ColRow = BtnClicked.Name.Split('_');
+                int cellIndex = game.GetByRow(int.Parse(ColRow[0]), int.Parse(ColRow[1]));
+                int[] move = new int[] { cellIndex, int.Parse(btnText == "" ? "0" : btnText), controller.SelectedControl };
+                game.moves.Add(move);
+                game.SetCell(controller.SelectedControl, cellIndex);
+                //game.moves++;
             }
         }
 
@@ -159,25 +163,22 @@ namespace Sudoku
         {
             //Changing the selected number to input into sudoku
             btnText = btnText == "" ? 0.ToString() : btnText;
-            SelectedVal = int.Parse(btnText);
+            controller.SelectedControl = int.Parse(btnText);
             HighlightSelected();
         }
 
-        private void InputNumberOnSudoku(Button BtnClicked, string btnText)
+        public void InputNumberOnSudoku(Button BtnClicked, string btnText)
         {
             //changing a cell on the sudoku game
-            BtnClicked.Text = SelectedVal == 0 ? "" : SelectedVal.ToString();
+            BtnClicked.Text = controller.SelectedControl == 0 ? "" : controller.SelectedControl.ToString();
             int fontSize = BtnClicked.Text.Length > 1 ? (int)(textFontSize * 0.75) : fontSize = textFontSize;
             BtnClicked.Font = new Font("Arial", fontSize);
-            string[] ColRow = BtnClicked.Name.Split('_');
-            int cellIndex = game.GetByRow(int.Parse(ColRow[0]), int.Parse(ColRow[1]));
-            game.SetCell(SelectedVal, cellIndex);
         }
         private void HighlightSelected()
         {
             foreach (Button btn in sudokuPanel.Controls["SudokuControls"].Controls)
             {
-                if (btn.Text == SelectedVal.ToString() || (btn.Text == "" && SelectedVal == 0))
+                if (btn.Text == controller.SelectedControl.ToString() || (btn.Text == "" && controller.SelectedControl == 0))
                 {
                     btn.BackColor = Color.White;
                 }

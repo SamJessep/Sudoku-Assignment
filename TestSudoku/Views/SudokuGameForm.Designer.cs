@@ -40,8 +40,10 @@ namespace Sudoku
             this.GameTimer = new System.Windows.Forms.Label();
             this.ResetBtn = new System.Windows.Forms.Button();
             this.GameHUD = new System.Windows.Forms.Panel();
-            this.Highscore = new System.Windows.Forms.Label();
             this.HintBtn = new System.Windows.Forms.Button();
+            this.Highscore = new System.Windows.Forms.Label();
+            this.Undo = new System.Windows.Forms.Button();
+            this.Redo = new System.Windows.Forms.Button();
             this.MenuPanel.SuspendLayout();
             this.GameHUD.SuspendLayout();
             this.SuspendLayout();
@@ -78,7 +80,7 @@ namespace Sudoku
             this.SaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.SaveBtn.Location = new System.Drawing.Point(3, 6);
+            this.SaveBtn.Location = new System.Drawing.Point(8, 10);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(79, 40);
             this.SaveBtn.TabIndex = 3;
@@ -133,7 +135,7 @@ namespace Sudoku
             this.ResetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ResetBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ResetBtn.Location = new System.Drawing.Point(88, 6);
+            this.ResetBtn.Location = new System.Drawing.Point(93, 10);
             this.ResetBtn.Name = "ResetBtn";
             this.ResetBtn.Size = new System.Drawing.Size(73, 40);
             this.ResetBtn.TabIndex = 6;
@@ -149,11 +151,29 @@ namespace Sudoku
             this.GameHUD.Controls.Add(this.Highscore);
             this.GameHUD.Controls.Add(this.GameTimer);
             this.GameHUD.Controls.Add(this.SaveBtn);
-            this.GameHUD.Location = new System.Drawing.Point(271, 3);
+            this.GameHUD.Location = new System.Drawing.Point(262, 3);
             this.GameHUD.Name = "GameHUD";
-            this.GameHUD.Size = new System.Drawing.Size(551, 49);
+            this.GameHUD.Size = new System.Drawing.Size(560, 57);
             this.GameHUD.TabIndex = 5;
             this.GameHUD.Visible = false;
+            // 
+            // HintBtn
+            // 
+            this.HintBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.HintBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.HintBtn.BackColor = System.Drawing.SystemColors.Menu;
+            this.HintBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.HintBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HintBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HintBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.HintBtn.Location = new System.Drawing.Point(172, 10);
+            this.HintBtn.Name = "HintBtn";
+            this.HintBtn.Size = new System.Drawing.Size(86, 40);
+            this.HintBtn.TabIndex = 8;
+            this.HintBtn.Tag = "Load/Save";
+            this.HintBtn.Text = "Hint";
+            this.HintBtn.UseVisualStyleBackColor = false;
+            this.HintBtn.Click += new System.EventHandler(this.HintBtn_Click);
             // 
             // Highscore
             // 
@@ -165,23 +185,41 @@ namespace Sudoku
             this.Highscore.TabIndex = 7;
             this.Highscore.Text = "Highscore: 0";
             // 
-            // HintBtn
+            // Undo
             // 
-            this.HintBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.HintBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.HintBtn.BackColor = System.Drawing.SystemColors.Menu;
-            this.HintBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HintBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HintBtn.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HintBtn.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.HintBtn.Location = new System.Drawing.Point(167, 6);
-            this.HintBtn.Name = "HintBtn";
-            this.HintBtn.Size = new System.Drawing.Size(86, 40);
-            this.HintBtn.TabIndex = 8;
-            this.HintBtn.Tag = "Load/Save";
-            this.HintBtn.Text = "Hint";
-            this.HintBtn.UseVisualStyleBackColor = false;
-            this.HintBtn.Click += new System.EventHandler(this.HintBtn_Click);
+            this.Undo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Undo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Undo.BackColor = System.Drawing.SystemColors.Menu;
+            this.Undo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Undo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Undo.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Undo.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Undo.Location = new System.Drawing.Point(12, 66);
+            this.Undo.Name = "Undo";
+            this.Undo.Size = new System.Drawing.Size(79, 40);
+            this.Undo.TabIndex = 3;
+            this.Undo.Tag = "";
+            this.Undo.Text = "Undo";
+            this.Undo.UseVisualStyleBackColor = false;
+            this.Undo.Click += new System.EventHandler(this.UndoBtn_Clicked);
+            // 
+            // Redo
+            // 
+            this.Redo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Redo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Redo.BackColor = System.Drawing.SystemColors.Menu;
+            this.Redo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Redo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Redo.Font = new System.Drawing.Font("Segoe UI Symbol", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Redo.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Redo.Location = new System.Drawing.Point(717, 66);
+            this.Redo.Name = "Redo";
+            this.Redo.Size = new System.Drawing.Size(79, 40);
+            this.Redo.TabIndex = 3;
+            this.Redo.Tag = "";
+            this.Redo.Text = "Redo";
+            this.Redo.UseVisualStyleBackColor = false;
+            this.Redo.Click += new System.EventHandler(this.RedoBtn_Clicked);
             // 
             // SudokuGameForm
             // 
@@ -193,6 +231,8 @@ namespace Sudoku
             this.ClientSize = new System.Drawing.Size(799, 235);
             this.Controls.Add(this.GameHUD);
             this.Controls.Add(this.MenuPanel);
+            this.Controls.Add(this.Redo);
+            this.Controls.Add(this.Undo);
             this.Name = "SudokuGameForm";
             this.Text = "Sudoku";
             this.MenuPanel.ResumeLayout(false);
@@ -213,5 +253,7 @@ namespace Sudoku
         private Panel GameHUD;
         private Label Highscore;
         private Button HintBtn;
+        private Button Undo;
+        private Button Redo;
     }
 }

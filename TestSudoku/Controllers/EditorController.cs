@@ -10,6 +10,7 @@ namespace Sudoku
     {
         IEditor editor;
         Game game;
+        public int SelectedControl = 0;
 
         public EditorController(IEditor editorView)
         {

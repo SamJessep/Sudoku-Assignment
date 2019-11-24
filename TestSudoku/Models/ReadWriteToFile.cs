@@ -65,12 +65,11 @@ namespace Sudoku
             SetSquareWidth(s.SquareWidth);
             SetSquareHeight(s.SquareHeight);
             highScore = s.Highscore;
-            targetTime = s.TargetTime;
             hintsUsed = loadSave ? s.HintsUsed : 0;
             timeTaken = loadSave ? s.TimeSpent : 0;
-            baseScore = s.BaseScore;
             gridHeight = gridWidth = squareWidth * squareHeight;
             gridLength = gridHeight * gridWidth;
+            targetTime = gridLength * 5;
             numberOfSquares = gridHeight;
         }
 
