@@ -93,11 +93,8 @@ namespace Sudoku
         {
             Game loadedGameTemplate = new Game();
             string path = editor.GetFilePath();
-            if(path != null)
-            {
-                loadedGameTemplate.FromCSV(path, false);
-                MakeGameTemplate(loadedGameTemplate);
-            }
+            loadedGameTemplate.FromCSV(path, false);
+            MakeGameTemplate(loadedGameTemplate);
         }
 
     }
