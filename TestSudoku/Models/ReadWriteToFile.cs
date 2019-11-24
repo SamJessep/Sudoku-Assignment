@@ -11,12 +11,12 @@ namespace Sudoku
 {
     public partial class Game : ISerialize
     {
-        private string currentGameFile;
+        public string currentGameFile;
 
         public string FromCSV(string csv, bool loadSave)
         {
-            csv = GetRelativePath(csv, AppDomain.CurrentDomain.BaseDirectory);
             currentGameFile = csv;
+            csv = GetRelativePath(csv, AppDomain.CurrentDomain.BaseDirectory);
             string csvText = File.ReadAllText(@Uri.UnescapeDataString(csv));
             Dictionary<string, string> csvParts = SplitInput(csvText);
             string OriginalSudoku = csvParts["OriginalSudoku"];
@@ -89,7 +89,6 @@ namespace Sudoku
             s.TargetTime = targetTime;
             s.HintsUsed = hintsUsed;
             s.TimeSpent = timeTaken;
-            s.BaseScore = baseScore;
             return s;
         }
 

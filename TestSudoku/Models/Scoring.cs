@@ -14,15 +14,28 @@ namespace Sudoku
         public int targetTime;
         public int timeTaken;
         public int moves = 0;
-        private int baseScore;
+        private double baseScore;
         public Timer timer;
 
 
         public int GetScore()
         {
-            return (gridLength * 10) / (moves + timeTaken + (hintsUsed * 10));
+            
+            int emptySquares = CountEmptySquares();
+            baseScore = Math.Pow(gridLength, ((double)emptySquares / (double)3));
+            targetTime = gridLength * 5;
+            double movesPenalty = moves / emptySquares;
+            double timeScore = 1 - ((double)timeTaken / (double)targetTime);
+            double ratioOfHints = (double)hintsUsed / (double)emptySquares;
+            double negativePenatlty = (double)timeScore * (double)movesPenalty;
+            double score = baseScore * negativePenatlty * (1 - ratioOfHints);
+            return (int)score;
         }
 
+        public int CountEmptySquares()
+        {
+            return originalNumbersArray.Count(number => number == 0);
+        }
 
 
         public void StartTimer()

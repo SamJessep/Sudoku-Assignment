@@ -115,7 +115,9 @@ namespace Sudoku
 
         public void ResetGame()
         {
-            game.numbersArray = game.originalNumbersArray;
+            string gamePath = game.currentGameFile;
+            game = new Game();
+            game.FromCSV(gamePath, false);
             view.ResetGame();
         }
 
