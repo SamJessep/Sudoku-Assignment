@@ -91,7 +91,7 @@ namespace Sudoku
         {
             SetScore();
             view.Show("Game Completed in: " + game.timeTaken + " seconds, Your score was:" + game.GetScore());
-            view.Show("Moves:" + game.moves + "TimeTaken:" + game.timeTaken);
+            view.Show("Moves:" + game.moves.Count + "TimeTaken:" + game.timeTaken);
             StopTimer();
         }
         
@@ -123,7 +123,7 @@ namespace Sudoku
             view.ResetGame();
         }
 
-        public void Undo()
+        /*public void Undo()
         {
             int[] LastMove = game.moves[game.moves.Count - 2];
             game.SetCell(LastMove[1], LastMove[0]);
@@ -132,7 +132,7 @@ namespace Sudoku
         public void Redo()
         {
 
-        }
+        }*/
 
 
         public string GetTimeAsString()

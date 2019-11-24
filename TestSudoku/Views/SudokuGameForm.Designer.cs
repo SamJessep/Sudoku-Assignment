@@ -186,7 +186,8 @@ namespace Sudoku
             this.Highscore.Text = "Highscore: 0";
             // 
             // Undo
-            // 
+            //
+            /*
             this.Undo.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Undo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Undo.BackColor = System.Drawing.SystemColors.Menu;
@@ -220,7 +221,7 @@ namespace Sudoku
             this.Redo.Text = "Redo";
             this.Redo.UseVisualStyleBackColor = false;
             this.Redo.Click += new System.EventHandler(this.RedoBtn_Clicked);
-            // 
+            */// 
             // SudokuGameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
