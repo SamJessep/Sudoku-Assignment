@@ -54,6 +54,7 @@ namespace Sudoku
             {
                 Button cell = MakeButton("inputBtn_", i.ToString(), 0, i);
                 cell.Click += GridButton_clicked;
+                cell.Cursor = Cursors.Hand;
                 gameControls.Controls.Add(cell);
             }
             return gameControls;

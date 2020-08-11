@@ -50,16 +50,6 @@ namespace Sudoku
             controller.ResetGame();
         }
 
-        /*private void UndoBtn_Clicked(object sender, EventArgs e)
-        {
-            controller.Undo();
-        }
-
-        private void RedoBtn_Clicked(object sender, EventArgs e)
-        {
-            controller.Redo();
-        }*/
-
         public new void SetController(GameController theController)
         {
             controller = theController;
